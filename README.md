@@ -1,13 +1,15 @@
 # 使用方法
-1. 下载后整个文件夹改名为Mods，放到解Hades II\Content目录下，下载modimporter.exe，也一同放到Hades II\Content目录下
+1. 下载后整个文件夹改名为Mods，放到解Hades II\Content目录下，下载[modimporter.exe](https://github.com/SGG-Modding/sgg-mod-modimporter/releases/latest/download/modimporter-windows.zip)，也一同放到Hades II\Content目录下
 2. 双击Hades II\Content\modimporter.exe运行【每次版本更新需要重新运行！】
 最终目录结构参考
+```
 Hades II/
 └── Content/
     ├── Mods/
     │   ├── PonyMenu/
     │   └── CheatMenu/
     └── modimporter.exe
+```
 【游戏内按I打开物品栏标签最后一栏开启修改】
 【确认游戏文件夹名称为Hades II，不然导入mod会失效！】
 
