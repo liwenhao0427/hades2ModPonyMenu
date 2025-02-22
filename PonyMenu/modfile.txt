@@ -1,0 +1,15 @@
+To Scripts/RoomLogic.lua
+Top Import config.lua
+Top Import init.lua
+Import Text/en.lua
+Import Text/fr.lua
+Import Text/zh-CN.lua
+Import Text/zh-TW.lua
+
+Import core.lua
+Import Scripts/MenuScripts.lua
+Import Data/ScreenData.lua
+
+
+To Scripts/ResourceData.lua
+Import Data/ResourceData.lua

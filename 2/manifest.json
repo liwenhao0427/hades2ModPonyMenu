@@ -1,0 +1,9 @@
+{
+  "namespace": "SGG_Modding",
+  "name": "ModUtil",
+  "description": "Utility mod for mod interactions within lua for for SGG's games",
+  "version_number": "2.10.1",
+  "dependencies": [],
+  "website_url": "https://github.com/SGG-Modding/ModUtil",
+  "FullName": "SGG_Modding-ModUtil"
+}
