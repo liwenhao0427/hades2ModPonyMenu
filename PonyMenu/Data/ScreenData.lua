@@ -572,6 +572,30 @@ function mod.setupCommandData()
 			NoSpawn = true
 		},
 		{
+			IconPath = "GUI\\Icons\\ManaLock",
+			IconScale = 1.5,
+			Name = "NPC_Medea_01",
+			Type = "Boon",
+			NoRarity = true,
+			NoSpawn = true
+		},
+		{
+			IconPath = "GUI\\Icons\\Favor",
+			IconScale = 1.0,
+			Name = "NPC_Icarus_01",
+			Type = "Boon",
+			NoRarity = true,
+			NoSpawn = true
+		},
+		{
+			IconPath = "GUI\\Icons\\ManaCrystal",
+			IconScale = 1.5,
+			Name = "NPC_Circe_01",
+			Type = "Boon",
+			NoRarity = true,
+			NoSpawn = true
+		},
+		{
 			IconPath = "GUI\\Icons\\GhostEmote\\Smile",
 			IconScale = 0.6,
 			Name = "NPC_Narcissus_01",

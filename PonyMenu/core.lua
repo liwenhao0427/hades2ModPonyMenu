@@ -29,6 +29,9 @@ local function setupMainData()
 		NPC_Narcissus_01 = {},
 		NPC_Echo_01 = {},
 		NPC_LordHades_01 = {},
+		NPC_Medea_01 = {},
+		NPC_Icarus_01 = {},
+		NPC_Circe_01 = {},
 	}
 end
 
@@ -438,6 +441,21 @@ function mod.PopulateBoonData(upgradeName)
 				index = index + 1
 				mod.BoonData[upgradeName][index] = v
 			end
+		elseif upgradeName == "NPC_Medea_01" then
+			for k, v in pairs(UnitSetData.NPC_Medea.NPC_Medea_01.Traits) do
+				index = index + 1
+				mod.BoonData[upgradeName][index] = v
+			end
+		elseif upgradeName == "NPC_Icarus_01" then
+			for k, v in pairs(UnitSetData.NPC_Icarus.NPC_Icarus_01.Traits) do
+				index = index + 1
+				mod.BoonData[upgradeName][index] = v
+			end
+		elseif upgradeName == "NPC_Circe_01" then
+			for k, v in pairs(UnitSetData.NPC_Circe.NPC_Circe_01.Traits) do
+				index = index + 1
+				mod.BoonData[upgradeName][index] = v
+			end
 		end
 	end
 end
@@ -464,6 +482,12 @@ function mod.GetLootColor(upgradeName)
 		color = Color.NarcissusVoice
 	elseif upgradeName == "NPC_LordHades_01" then
 		color = UnitSetData.NPC_Hades.NPC_Hades_Field_01.LootColor
+	elseif upgradeName == "NPC_Medea_01" then
+		color = Color.MedeaVoice
+	elseif upgradeName == "NPC_Icarus_01" then
+		color = Color.IcarusVoice
+	elseif upgradeName == "NPC_Circe_01" then
+		color = Color.CirceVoice
 	end
 	return color
 end
