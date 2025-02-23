@@ -484,6 +484,8 @@ function mod.setupScreenData()
 				"I_Boss01",
 				"N_Boss01",
 				"O_Boss01",
+				"P_Boss01",
+				"Q_Boss01",
 			},
 			BossData = {
 				F_Boss01 = {
@@ -509,6 +511,14 @@ function mod.setupScreenData()
 				O_Boss01 = {
 					Name = "Eris_Full",
 					Portrait = "Codex_Portrait_Eris",
+				},
+				P_Boss01 = {
+					Name = "Prometheus_Full",
+					Portrait = "Codex_Portrait_Prometheus",
+				},
+				Q_Boss01 = {
+					Name = "TyphonHead_Full",
+					Portrait = "Codex_Portrait_Typhon",
 				},
 			},
 			TitleText =

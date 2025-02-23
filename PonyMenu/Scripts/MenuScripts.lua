@@ -1373,54 +1373,54 @@ function mod.OpenBossSelector()
 		local rowoffsetY = 350
 
 		for _, value in ipairs(screen.ItemOrder) do
-			if GameState.RoomCountCache[value] then
-				local boss = screen.BossData[value]
-				boss.Room = DeepCopyTable(RoomData[value])
+			-- if GameState.RoomCountCache[value] then
+			local boss = screen.BossData[value]
+			boss.Room = DeepCopyTable(RoomData[value])
 
-				local key = "Boss" .. index
-				local buttonKey = "Button" .. index
-				local fraction = 0.1
-				local rowIndex = math.floor(index / boonsPerRow)
-				local offsetX = rowoffsetX + columnOffset * (index % boonsPerRow)
-				local offsetY = rowoffsetY + rowOffset * (rowIndex % rowsPerPage)
-				index = index + 1
+			local key = "Boss" .. index
+			local buttonKey = "Button" .. index
+			local fraction = 0.1
+			local rowIndex = math.floor(index / boonsPerRow)
+			local offsetX = rowoffsetX + columnOffset * (index % boonsPerRow)
+			local offsetY = rowoffsetY + rowOffset * (rowIndex % rowsPerPage)
+			index = index + 1
 
-				components[buttonKey] = CreateScreenComponent({
-					Name = "ButtonDefault",
-					Scale = 1.0,
-					Group = "Combat_Menu_TraitTray",
-					Color = Color.White
-				})
-				components[buttonKey].Image = key
-				components[buttonKey].Boss = boss
-				components[buttonKey].Index = index
-				SetScaleX({ Id = components[buttonKey].Id, Fraction = 0.69 })
-				SetScaleY({ Id = components[buttonKey].Id, Fraction = 3.8 })
-				components[key] = CreateScreenComponent({
-					Name = "BlankObstacle",
-					Scale = 1.2,
-					Group = "Combat_Menu_TraitTray"
-				})
+			components[buttonKey] = CreateScreenComponent({
+				Name = "ButtonDefault",
+				Scale = 1.0,
+				Group = "Combat_Menu_TraitTray",
+				Color = Color.White
+			})
+			components[buttonKey].Image = key
+			components[buttonKey].Boss = boss
+			components[buttonKey].Index = index
+			SetScaleX({ Id = components[buttonKey].Id, Fraction = 0.69 })
+			SetScaleY({ Id = components[buttonKey].Id, Fraction = 3.8 })
+			components[key] = CreateScreenComponent({
+				Name = "BlankObstacle",
+				Scale = 1.2,
+				Group = "Combat_Menu_TraitTray"
+			})
 
-				SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components[key].Id })
-				components[buttonKey].OnPressedFunctionName = mod.HandleBossSelection
-				fraction = 1.0
+			SetThingProperty({ Property = "Ambient", Value = 0.0, DestinationId = components[key].Id })
+			components[buttonKey].OnPressedFunctionName = mod.HandleBossSelection
+			fraction = 1.0
 
-				SetAlpha({ Ids = { components[key].Id, components[buttonKey].Id }, Fraction = 0 })
-				SetAlpha({ Ids = { components[key].Id, components[buttonKey].Id }, Fraction = fraction, Duration = 0.9 })
-				SetAnimation({ DestinationId = components[key].Id, Name = boss.Portrait, Scale = 0.4 })
-				local delay = RandomFloat(0.1, 0.5)
-				Move({
-					Ids = { components[key].Id, components[buttonKey].Id },
-					OffsetX = offsetX,
-					OffsetY = offsetY,
-					Duration = delay
-				})
-				local titleText = ShallowCopyTable(screen.TitleText)
-				titleText.Id = components[buttonKey].Id
-				titleText.Text = boss.Name
-				CreateTextBox(titleText)
-			end
+			SetAlpha({ Ids = { components[key].Id, components[buttonKey].Id }, Fraction = 0 })
+			SetAlpha({ Ids = { components[key].Id, components[buttonKey].Id }, Fraction = fraction, Duration = 0.9 })
+			SetAnimation({ DestinationId = components[key].Id, Name = boss.Portrait, Scale = 0.4 })
+			local delay = RandomFloat(0.1, 0.5)
+			Move({
+				Ids = { components[key].Id, components[buttonKey].Id },
+				OffsetX = offsetX,
+				OffsetY = offsetY,
+				Duration = delay
+			})
+			local titleText = ShallowCopyTable(screen.TitleText)
+			titleText.Id = components[buttonKey].Id
+			titleText.Text = boss.Name
+			CreateTextBox(titleText)
+			-- end
 		end
 	else
 		local txt = mod.Locale.BossSelectorNoSavedState
