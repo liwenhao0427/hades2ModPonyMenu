@@ -3,6 +3,7 @@ Top Import config.lua
 Top Import init.lua
 Import Text/en.lua
 Import Text/fr.lua
+Import Text/ptBR.lua
 Import Text/zh-CN.lua
 Import Text/zh-TW.lua
 

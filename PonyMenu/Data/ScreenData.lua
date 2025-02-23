@@ -475,76 +475,75 @@ end
 function mod.setupCommandData()
 	mod.CommandData = {
 		{
-			Icon = "BoonSymbolZeus",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Zeus",
+			IconScale = 0.4,
 			Name = "ZeusUpgrade",
 			Type = "Boon"
 		},
-		-- 阿瑞斯祝福
 		{
-			Icon = "BoonSymbolAres",
-			IconScale = 0.6,
-			Name = "AresUpgrade",
-			Type = "Boon"
-		},
-		{
-			Icon = "BoonSymbolPoseidon",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Poseidon",
+			IconScale = 0.4,
 			Name = "PoseidonUpgrade",
 			Type = "Boon"
 		},
 		{
-			Icon = "BoonSymbolAphrodite",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Aphrodite",
+			IconScale = 0.4,
 			Name = "AphroditeUpgrade",
 			Type = "Boon"
 		},
 		{
-			Icon = "BoonSymbolApollo",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Ares",
+			IconScale = 0.4,
+			Name = "AresUpgrade",
+			Type = "Boon"
+		},
+		{
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Apollo",
+			IconScale = 0.4,
 			Name = "ApolloUpgrade",
 			Type = "Boon"
 		},
 		{
-			Icon = "BoonSymbolDemeter",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Demeter",
+			IconScale = 0.4,
 			Name = "DemeterUpgrade",
 			Type = "Boon"
 		},
 		{
-			Icon = "BoonSymbolHephaestus",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Hephaestus",
+			IconScale = 0.4,
 			Name = "HephaestusUpgrade",
 			Type = "Boon"
 		},
 		{
-			Icon = "BoonDropHestiaPreview",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Hestia",
+			IconScale = 0.4,
 			Name = "HestiaUpgrade",
 			Type = "Boon"
 		},
 		{
-			Icon = "BoonSymbolArtemis",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Artemis",
+			IconScale = 0.4,
 			Name = "ArtemisUpgrade",
 			Type = "Boon",
 			NoSpawn = true
 		},
 		{
-			Icon = "BoonSymbolHermes",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Hermes",
+			IconScale = 0.4,
 			Name = "HermesUpgrade",
 			Type = "Boon"
 		},
 		{
-			Icon = "BoonDropHeraPreview",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Hera",
+			IconScale = 0.4,
 			Name = "HeraUpgrade",
 			Type = "Boon"
 		},
 		{
-			Icon = "BoonSymbolChaos",
-			IconScale = 0.6,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Chaos",
+			IconScale = 0.4,
 			Name = "TrialUpgrade",
 			Type = "Boon"
 		},
@@ -572,30 +571,6 @@ function mod.setupCommandData()
 			NoSpawn = true
 		},
 		{
-			IconPath = "GUI\\Icons\\ManaLock",
-			IconScale = 1.5,
-			Name = "NPC_Medea_01",
-			Type = "Boon",
-			NoRarity = true,
-			NoSpawn = true
-		},
-		{
-			IconPath = "GUI\\Icons\\Favor",
-			IconScale = 1.0,
-			Name = "NPC_Icarus_01",
-			Type = "Boon",
-			NoRarity = true,
-			NoSpawn = true
-		},
-		{
-			IconPath = "GUI\\Icons\\ManaCrystal",
-			IconScale = 1.5,
-			Name = "NPC_Circe_01",
-			Type = "Boon",
-			NoRarity = true,
-			NoSpawn = true
-		},
-		{
 			IconPath = "GUI\\Icons\\GhostEmote\\Smile",
 			IconScale = 0.6,
 			Name = "NPC_Narcissus_01",
@@ -609,6 +584,52 @@ function mod.setupCommandData()
 			Name = "NPC_Echo_01",
 			Type = "Boon",
 			NoRarity = true,
+			NoSpawn = true
+		},
+		{
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Hades",
+			IconScale = 0.4,
+			Name = "NPC_LordHades_01",
+			Type = "Boon",
+			NoRarity = true,
+			NoSpawn = true
+		},
+		{
+			IconPath = "GUI\\Icons\\Mana",
+			IconScale = 1.0,
+			Name = "NPC_Medea_01",
+			Type = "Boon",
+			NoRarity = true,
+			NoSpawn = true
+		},
+		{
+			IconPath = "GUI\\Icons\\Attributes\\Timeless",
+			IconScale = 0.7,
+			Name = "NPC_Icarus_01",
+			Type = "Boon",
+			NoRarity = true,
+			NoSpawn = true
+		},
+		{
+			IconPath = "GUI\\Icons\\ManaCrystal",
+			IconScale = 1.0,
+			Name = "NPC_Circe_01",
+			Type = "Boon",
+			NoRarity = true,
+			NoSpawn = true
+		},
+		{
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Athena",
+			IconScale = 0.4,
+			Name = "NPC_Athena_01",
+			Type = "Boon",
+			NoSpawn = true
+		},
+		{
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Dionysus",
+			IconScale = 0.4,
+			Name = "NPC_Dionysus_01",
+			Type = "Boon",
 			NoSpawn = true
 		},
 		{

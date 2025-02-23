@@ -242,6 +242,8 @@ function mod.BoonSelectorLoadPage(screen)
 				local color = Color["BoonPatch" .. rarity]
 				if upgradeData.CustomRarityColor then
 					color = upgradeData.CustomRarityColor
+				elseif upgradeData.CustomRarityName == "Boon_Infusion" then
+					color = Color.BoonPatchElemental
 				end
 				--#region Text
 				local rarityText = ShallowCopyTable(screendata.RarityText)

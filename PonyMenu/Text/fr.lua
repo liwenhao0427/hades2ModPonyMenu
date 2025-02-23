@@ -29,5 +29,23 @@ mod.AddLocale("fr", {
 	ResourceMenuTitle = "Menu des Ressources",
 	ResourceMenuDescription = "Créer n'importe quelle ressource au nombre que vous souhaitez.",
 	ResourceMenuSpawnButton = "Créer Ressource",
-	ResourceMenuEmpty = "Rien"
+	ResourceMenuEmpty = "Rien",
+
+	BossSelectorTitle = "Sélecteur de Boss",
+	BossSelectorDescription = "Vous permet d'aller directement à un boss, équippé de votre kit sauvegardé.",
+	BossSelectorNoSavedState = "PAS DE KIT SAUVEGARDÉ! ALLEZ EN FAIRE UN!",
+
+	KillPlayerTitle = "Tuer le Joueur",
+	KillPlayerDescription = "Vous tue et vous renvoie à la croisée des chemins.",
+
+	SaveStateTitle = "Sauvegarder Kit",
+	SaveStateDescription = "Sauvegarde votre kit actuel pour l'équiper plus tard, requis pour utiliser le sélecteur de boss. Sauvegarde tout ce que vous avez équippé actuellement.",
+	SaveStateSaved = "Kit sauvegardé!",
+
+	LoadStateTitle = "Équiper kit",
+	LoadStateDescription = "Équippe votre kit sauvegardé. Ne peut-être utilisé si vous n'en avez pas.",
+	SaveStateLoaded = "Kit équippé!",
+
+	ConsumableSelectorTitle = "Sélecteur de consommables.",
+	ConsumableSelectorDescription = "Donnez vous n'importe quel objet consommable."
 })

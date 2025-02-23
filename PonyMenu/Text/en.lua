@@ -29,5 +29,24 @@ mod.AddLocale("en", {
 	ResourceMenuTitle = "Resource Menu",
 	ResourceMenuDescription = "Spawn any resource in any amount.",
 	ResourceMenuSpawnButton = "Spawn Resource",
-	ResourceMenuEmpty = "None"
+	ResourceMenuEmpty = "None",
+
+	BossSelectorTitle = "Boss Selector",
+	BossSelectorDescription = "Let's you go straight to a boss and fight them, using your currently selected loadout.",
+	BossSelectorNoSavedState = "NO SAVED STATE! GO MAKE ONE!",
+
+	KillPlayerTitle = "Kill Player",
+	KillPlayerDescription = "Kills you and sends you back to the crossroads.",
+
+	SaveStateTitle = "Save State",
+	SaveStateDescription = "Save your current state to load it later, required to use boss selector. Saves everything you have currently equipped.",
+	SaveStateSaved = "State saved!",
+
+	LoadStateTitle = "Load State",
+	LoadStateDescription = "Loads your saved state. Cannot be used if you don't have a saved state.",
+	SaveStateLoaded = "State loaded!",
+
+	ConsumableSelectorTitle = "Consumable Selector",
+	ConsumableSelectorDescription = "Give yourself any consumable item."
+
 })

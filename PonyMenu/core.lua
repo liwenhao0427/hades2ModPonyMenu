@@ -12,9 +12,9 @@ local function setupMainData()
 
 	mod.BoonData = {
 		ZeusUpgrade = {},
-		AresUpgrade = {},
 		PoseidonUpgrade = {},
 		AphroditeUpgrade = {},
+		AresUpgrade = {},
 		ApolloUpgrade = {},
 		DemeterUpgrade = {},
 		HephaestusUpgrade = {},
@@ -32,6 +32,8 @@ local function setupMainData()
 		NPC_Medea_01 = {},
 		NPC_Icarus_01 = {},
 		NPC_Circe_01 = {},
+		NPC_Athena_01 = {},
+		NPC_Dionysus_01 = {}
 	}
 end
 
@@ -47,21 +49,16 @@ end
 ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categoryIndex, args)
 	args = args or {}
 	local components = screen.Components
-
+	
 	-- Cleanup prev category
-	prevCategory = screen.ItemCategories[screen.ActiveCategoryIndex]
+	local prevCategory = screen.ItemCategories[screen.ActiveCategoryIndex]
 	--Mod start
-	if screen.ActiveCategoryIndex > 6  then
-		for i, resourceName in ipairs(prevCategory) do
-			if components[resourceName] ~= nil then
-				Destroy({ Id = components[resourceName].Id })
-			end
-		end
+	if prevCategory == nil then
 		prevCategory = screen.ItemCategories[1]
 	end
 	-- Mod end
 	if prevCategory.CloseFunctionName ~= nil then
-		CallFunctionName(prevCategory.CloseFunctionName, screen)
+		CallFunctionName( prevCategory.CloseFunctionName, screen )
 	else
 		for i, resourceName in ipairs( prevCategory ) do
 			local resourceComponent = components[resourceName]
@@ -69,7 +66,11 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 				if resourceComponent.NewIcon ~= nil then
 					Destroy({ Id = resourceComponent.NewIcon.Id })
 				end
-				Destroy({ Id = resourceComponent.Highlight.Id })
+				-- Mod start
+				if resourceComponent.Highlight ~= nil then
+					Destroy({ Id = resourceComponent.Highlight.Id })
+				end
+				-- Mod end
 				Destroy({ Id = resourceComponent.Id })
 			end
 		end
@@ -91,6 +92,13 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 
 	-- Highlight new category
 	CreateAnimation({ DestinationId = screen.Components["Category"..slotName].Id, Name = "InventoryTabHighlightActiveCategory", Group = "Combat_Menu_TraitTray" })
+	ModifyTextBox({ Id = screen.Components.CategoryTitleText.Id, Text = category.Name })
+
+	local newButtonKey = "NewIcon"..slotName
+	if components[newButtonKey] ~= nil then
+		Destroy({ Id = components[newButtonKey].Id })
+	end
+
 	--Mod Start
 	if category.Name == "PONYMENU" or category.Name == "Pony Menu" then
 		ModifyTextBox({ Id = screen.Components.CategoryTitleText.Id, Text = mod.Locale.PonyMenuCategoryTitle })
@@ -99,13 +107,6 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 	end
 	--Mod end
 
-	ModifyTextBox({ Id = screen.Components.CategoryTitleText.Id, Text = category.Name })
-
-	local newButtonKey = "NewIcon"..slotName
-	if components[newButtonKey] ~= nil then
-		Destroy({ Id = components[newButtonKey].Id })
-	end
-
 	screen.ActiveCategoryIndex = categoryIndex
 
 	screen.CloseAnimation = category.CloseAnimation
@@ -113,7 +114,12 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 		SetAnimation({ DestinationId = components.Background.Id, Name = category.OpenAnimation })
 	else
 		local fromMap = screen.TransitionAnimationMap[prevCategory.CloseAnimation]
-		local transitionAnimationName = fromMap[category.CloseAnimation]
+		-- Mod start
+		local transitionAnimationName
+		if fromMap ~= nil then
+			transitionAnimationName = fromMap[category.CloseAnimation]
+		end
+		-- Mod end
 		if transitionAnimationName ~= nil then
 			SetAnimation({ DestinationId = components.Background.Id, Name = transitionAnimationName })
 		end
@@ -132,14 +138,13 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 	
 	local resourceLocation = { X = screen.GridStartX, Y = screen.GridStartY }
 	local columnNum = 1
-	
 	-- Mod start
 	if category.Name ~= "PONYMENU" and category.Name ~= "Pony Menu" then
 		for i, resourceName in ipairs( category ) do
 
 			local resourceData = ResourceData[resourceName]
 			if CanShowResourceInInventory( resourceData ) then
-	
+
 				local textLines = nil
 				local canBeGifted = false
 				local canBePlanted = false
@@ -159,7 +164,7 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 						end
 					end
 				end
-	
+
 				local button = CreateScreenComponent({ Name = "ButtonInventoryItem",
 					Scale = resourceData.IconScale or 1.0,
 					Sound = "/SFX/Menu Sounds/IrisMenuBack",
@@ -176,7 +181,7 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 				button.ResourceData = resourceData
 				components[resourceName] = button
 				SetAnimation({ DestinationId = button.Id, Name = resourceData.IconPath or resourceData.Icon })
-	
+
 				local buttonHighlight = CreateScreenComponent({ Name = "BlankObstacle",
 					Group = "Combat_Menu_Overlay_Additive",
 					X = resourceLocation.X,
@@ -232,13 +237,13 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 					SetColor({ Id = button.Id, Color = Color.Black })
 					button.MouseOverText = "InventoryScreen_GiftNotWanted"
 				end
-	
+
 				CreateTextBoxWithScreenFormat( screen, button, "ResourceCountFormat", { Text = GameState.Resources[resourceName] or 0 } )
-	
+
 				button.MouseOverSound = "/SFX/Menu Sounds/DialoguePanelOutMenu"
 				button.OnMouseOverFunctionName = "MouseOverResourceItem"
 				button.OnMouseOffFunctionName = "MouseOffResourceItem"
-	
+
 				button.Viewable = not screen.Args.CategoryLocked or button.OnPressedFunctionName ~= nil
 				if button.Viewable then
 					-- highlight the last resource you collected
@@ -248,7 +253,7 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 						TeleportCursor({ OffsetX = resourceLocation.X, OffsetY = resourceLocation.Y, ForceUseCheck = true })
 						screen.CursorSet = true
 					end
-	
+
 					-- mark unviewed resources as "new"
 					if not GameState.ResourcesViewed[resourceName] then
 						local newIcon = CreateScreenComponent({ Name = "BlankObstacle", Animation = "MusicPlayerNewTrack", Group = screen.ComponentData.DefaultGroup, Scale = screen.NewItemStarScale, })
@@ -261,7 +266,7 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 						components["NewIcon"..resourceName] = newIcon
 					end
 				end
-	
+
 				if columnNum < screen.GridWidth then
 					columnNum = columnNum + 1
 					resourceLocation.X = resourceLocation.X + screen.GridSpacingX
@@ -283,12 +288,10 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 			local button = CreateScreenComponent({
 				Name = "ButtonInventoryItem",
 				Scale = itemData.IconScale or 1.0,
-				Sound =
-				"/SFX/Menu Sounds/GodBoonMenuClose",
+				Sound = "/SFX/Menu Sounds/GodBoonMenuClose",
 				Group = "Combat_Menu_Overlay",
 				X = resourceLocation.X,
-				Y =
-					resourceLocation.Y
+				Y = resourceLocation.Y + 10,
 			})
 			AttachLua({ Id = button.Id, Table = button })
 			button.Screen = screen
@@ -406,7 +409,7 @@ function mod.PopulateBoonData(upgradeName)
 			local wp = GetEquippedWeapon()
 			for k, v in pairs(LootSetData.Loot[upgradeName].Traits) do
 				local boon = TraitData[v]
-				if boon.RequiredWeapon == GetEquippedWeapon() then
+				if boon.CodexWeapon == GetEquippedWeapon() then
 					index = index + 1
 					mod.BoonData.WeaponUpgrade[index] = v
 				end
@@ -456,6 +459,16 @@ function mod.PopulateBoonData(upgradeName)
 				index = index + 1
 				mod.BoonData[upgradeName][index] = v
 			end
+		elseif upgradeName == "NPC_Athena_01" then
+			for k, v in pairs(UnitSetData.NPC_Athena.NPC_Athena_01.Traits) do
+				index = index + 1
+				mod.BoonData[upgradeName][index] = v
+			end
+		elseif upgradeName == "NPC_Dionysus_01" then
+			for k, v in pairs(UnitSetData.NPC_Dionysus.NPC_Dionysus_01.Traits) do
+				index = index + 1
+				mod.BoonData[upgradeName][index] = v
+			end
 		end
 	end
 end
@@ -488,6 +501,10 @@ function mod.GetLootColor(upgradeName)
 		color = Color.IcarusVoice
 	elseif upgradeName == "NPC_Circe_01" then
 		color = Color.CirceVoice
+	elseif upgradeName == "NPC_Athena_01" then
+		color = Color.AthenaVoice
+	elseif upgradeName == "NPC_Dionysus_01" then
+		color = Color.DionysusVoice
 	end
 	return color
 end
