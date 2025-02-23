@@ -651,6 +651,14 @@ end
 function mod.setupCommandData()
 	mod.CommandData = {
 		{
+			Icon = "GUI\\Icons\\RandomLoot",
+			IconScale = 0.8,
+			Name = '修改选项',
+			Description = '开启一些额外功能修改',
+			Type = "Command",
+			Function = "openCheatScreen"
+		},
+		{
 			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Zeus",
 			IconScale = 0.4,
 			Name = "ZeusUpgrade",
@@ -841,14 +849,6 @@ function mod.setupCommandData()
 			Function = "PonyMenu.OpenResourceMenu"
 		},
 		{
-			Icon = "GUI\\HUD\\Badges\\UI_PlayerBadge_Warden_Delta",
-			IconScale = 0.3,
-			Name = '修改选项',
-			Description = '开启一些功能修改',
-			Type = "Command",
-			Function = "openCheatScreen"
-		},
-		{
 			Icon = "TrashButtonFlash",
 			IconScale = 0.6,
 			Name = mod.Locale.ClearAllBoons,
@@ -881,16 +881,16 @@ function mod.setupCommandData()
 			Function = "PonyMenu.OpenConsumableSelector"
 		},
 		{
-			IconPath = "GUI\\Icons\\Boss",
-			IconScale = 0.6,
+			IconPath = "GUI\\Icons\\LobAmmo",
+			IconScale = 1.0,
 			Name = mod.Locale.BossSelectorTitle,
 			Description = mod.Locale.BossSelectorDescription,
 			Type = "Command",
 			Function = "PonyMenu.OpenBossSelector"
 		},
 		{
-			IconPath = "GUI\\Icons\\NoCanDo",
-			IconScale = 0.6,
+			IconPath = "GUI\\Graybox\\Button_Close",
+			IconScale = 0.8,
 			Name = mod.Locale.KillPlayerTitle,
 			Description = mod.Locale.KillPlayerDescription,
 			Type = "Command",
