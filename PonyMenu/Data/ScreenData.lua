@@ -651,14 +651,6 @@ end
 function mod.setupCommandData()
 	mod.CommandData = {
 		{
-			Icon = "GUI\\Icons\\RandomLoot",
-			IconScale = 0.8,
-			Name = '修改选项',
-			Description = '开启一些额外功能修改',
-			Type = "Command",
-			Function = "openCheatScreen"
-		},
-		{
 			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Zeus",
 			IconScale = 0.4,
 			Name = "ZeusUpgrade",
@@ -770,17 +762,10 @@ function mod.setupCommandData()
 			NoRarity = true,
 			NoSpawn = true
 		},
+		-- Medea
 		{
-			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Hades",
-			IconScale = 0.4,
-			Name = "NPC_LordHades_01",
-			Type = "Boon",
-			NoRarity = true,
-			NoSpawn = true
-		},
-		{
-			IconPath = "GUI\\Icons\\Mana",
-			IconScale = 1.0,
+			IconPath = "GUI\\Screens\\Inventory\\Icon-Inventory",
+			IconScale = 0.6,
 			Name = "NPC_Medea_01",
 			Type = "Boon",
 			NoRarity = true,
@@ -788,15 +773,15 @@ function mod.setupCommandData()
 		},
 		{
 			IconPath = "GUI\\Icons\\Attributes\\Timeless",
-			IconScale = 0.7,
+			IconScale = 0.5,
 			Name = "NPC_Icarus_01",
 			Type = "Boon",
 			NoRarity = true,
 			NoSpawn = true
 		},
 		{
-			IconPath = "GUI\\Icons\\ManaCrystal",
-			IconScale = 1.0,
+			IconPath = "GUI\\Icons\\Attributes\\Blink",
+			IconScale = 0.5,
 			Name = "NPC_Circe_01",
 			Type = "Boon",
 			NoRarity = true,
@@ -840,30 +825,7 @@ function mod.setupCommandData()
 			Type = "Command",
 			Function = "PonyMenu.OpenBoonManager"
 		},
-		{
-			IconPath = "GUI\\Screens\\Inventory\\Icon-Resources",
-			IconScale = 0.6,
-			Name = mod.Locale.ResourceMenuTitle,
-			Description = mod.Locale.ResourceMenuDescription,
-			Type = "Command",
-			Function = "PonyMenu.OpenResourceMenu"
-		},
-		{
-			Icon = "TrashButtonFlash",
-			IconScale = 0.6,
-			Name = mod.Locale.ClearAllBoons,
-			Description = mod.Locale.ClearAllBoonsDescription,
-			Type = "Command",
-			Function = "PonyMenu.ClearAllBoons"
-		},
-		{
-			Icon = "CharonPointsDrop",
-			IconScale = 0.6,
-			Name = mod.Locale.BoonManagerTitle,
-			Description = mod.Locale.BoonManagerDescription,
-			Type = "Command",
-			Function = "PonyMenu.OpenBoonManager"
-		},
+		-- 资源
 		{
 			IconPath = "GUI\\Screens\\Inventory\\Icon-Resources",
 			IconScale = 0.6,
@@ -880,17 +842,19 @@ function mod.setupCommandData()
 			Type = "Command",
 			Function = "PonyMenu.OpenConsumableSelector"
 		},
+		-- 区域守卫
 		{
-			IconPath = "GUI\\Icons\\LobAmmo",
-			IconScale = 1.0,
+			IconPath = "GUI\\Icons\\GhostEmote\\Disgruntled",
+			IconScale = 0.6,
 			Name = mod.Locale.BossSelectorTitle,
 			Description = mod.Locale.BossSelectorDescription,
 			Type = "Command",
 			Function = "PonyMenu.OpenBossSelector"
 		},
+		-- 自杀
 		{
-			IconPath = "GUI\\Graybox\\Button_Close",
-			IconScale = 0.8,
+			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Hades",
+			IconScale = 0.4,
 			Name = mod.Locale.KillPlayerTitle,
 			Description = mod.Locale.KillPlayerDescription,
 			Type = "Command",
@@ -911,6 +875,14 @@ function mod.setupCommandData()
 			Description = mod.Locale.LoadStateDescription,
 			Type = "Command",
 			Function = "PonyMenu.LoadState"
+		},
+		{
+			Icon = "GUI\\Icons\\RandomLoot",
+			IconScale = 0.8,
+			Name = '修改选项',
+			Description = '开启一些额外功能修改',
+			Type = "Command",
+			Function = "openCheatScreen"
 		},
 	}
 end
