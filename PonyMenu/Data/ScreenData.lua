@@ -468,6 +468,182 @@ function mod.setupScreenData()
 					}
 				},
 			}
+		},
+
+		BossSelector = {
+			Components = {},
+			OpenSound = "/SFX/Menu Sounds/HadesLocationTextAppear",
+			Name = "BossSelector",
+			RowStartX = 200,
+			RowStartY = ScreenCenterY,
+			IncrementX = 190,
+			ItemOrder = {
+				"F_Boss01",
+				"G_Boss01",
+				"H_Boss01",
+				"I_Boss01",
+				"N_Boss01",
+				"O_Boss01",
+			},
+			BossData = {
+				F_Boss01 = {
+					Name = "Hecate_Full",
+					Portrait = "Codex_Portrait_Hecate",
+				},
+				G_Boss01 = {
+					Name = "Scylla_Full",
+					Portrait = "Codex_Portrait_Scylla",
+				},
+				H_Boss01 = {
+					Name = "InfestedCerberus_Named",
+					Portrait = "Codex_Portrait_Cerberus",
+				},
+				I_Boss01 = {
+					Name = "Chronos_Full",
+					Portrait = "Codex_Portrait_Chronos",
+				},
+				N_Boss01 = {
+					Name = "Cyclops_Full",
+					Portrait = "Codex_Portrait_Polyphemus",
+				},
+				O_Boss01 = {
+					Name = "Eris_Full",
+					Portrait = "Codex_Portrait_Eris",
+				},
+			},
+			TitleText =
+			{
+				FontSize = 21,
+				Font = "P22UndergroundSCMedium",
+				ShadowBlur = 0,
+				ShadowColor = { 0, 0, 0, 1 },
+				ShadowOffset = { 0, 2 },
+				Justification = "Center",
+				Group = "Combat_Menu_TraitTray",
+				OffsetY = 150
+			},
+
+			ComponentData =
+			{
+				DefaultGroup = "Combat_Menu_TraitTray",
+				UseNativeScreenCenter = true,
+				Order = {
+					"BackgroundTint",
+					"Background"
+				},
+
+				BackgroundTint =
+				{
+					Graphic = "rectangle01",
+					GroupName = "Combat_Menu",
+					Scale = 10,
+					X = ScreenCenterX,
+					Y = ScreenCenterY,
+				},
+
+				Background =
+				{
+					AnimationName = "Box_FullScreen",
+					GroupName = "Combat_Menu",
+					X = ScreenCenterX,
+					Y = ScreenCenterY,
+					Scale = 1.15,
+					Text = mod.Locale.BossSelectorTitle,
+					TextArgs =
+					{
+						FontSize = 32,
+						Width = 750,
+						OffsetY = -(ScreenCenterY * 0.825),
+						Color = Color.White,
+						Font = "P22UndergroundSCHeavy",
+						ShadowBlur = 0,
+						ShadowColor = { 0, 0, 0, 0 },
+						ShadowOffset = { 0, 3 },
+					},
+
+					Children =
+					{
+						CloseButton =
+						{
+							Graphic = "ButtonClose",
+							GroupName = "Combat_Menu_TraitTray",
+							Scale = 0.7,
+							OffsetX = 0,
+							OffsetY = ScreenCenterY - 70,
+							Data =
+							{
+								OnPressedFunctionName = "PonyMenu.CloseBossSelectScreen",
+								ControlHotkeys = { "Cancel", },
+							},
+						},
+					}
+				},
+			}
+		},
+
+		ConsumableSelector = {
+			Components = {},
+			OpenSound = "/SFX/Menu Sounds/HadesLocationTextAppear",
+			Name = "ConsumableSelector",
+			RowStartX = -(ScreenCenterX * 0.65),
+			RowStartY = -(ScreenCenterY * 0.5),
+
+			ComponentData =
+			{
+				DefaultGroup = "Combat_Menu_TraitTray",
+				UseNativeScreenCenter = true,
+				Order = {
+					"BackgroundTint",
+					"Background"
+				},
+
+				BackgroundTint =
+				{
+					Graphic = "rectangle01",
+					GroupName = "Combat_Menu",
+					Scale = 10,
+					X = ScreenCenterX,
+					Y = ScreenCenterY,
+				},
+
+				Background =
+				{
+					AnimationName = "Box_FullScreen",
+					GroupName = "Combat_Menu",
+					X = ScreenCenterX,
+					Y = ScreenCenterY,
+					Scale = 1.15,
+					Text = mod.Locale.ConsumableSelectorTitle,
+					TextArgs =
+					{
+						FontSize = 32,
+						Width = 750,
+						OffsetY = -(ScreenCenterY * 0.825),
+						Color = Color.White,
+						Font = "P22UndergroundSCHeavy",
+						ShadowBlur = 0,
+						ShadowColor = { 0, 0, 0, 0 },
+						ShadowOffset = { 0, 3 },
+					},
+
+					Children =
+					{
+						CloseButton =
+						{
+							Graphic = "ButtonClose",
+							GroupName = "Combat_Menu_TraitTray",
+							Scale = 0.7,
+							OffsetX = 0,
+							OffsetY = ScreenCenterY - 70,
+							Data =
+							{
+								OnPressedFunctionName = "PonyMenu.CloseConsumableSelector",
+								ControlHotkeys = { "Cancel", },
+							},
+						},
+					}
+				},
+			}
 		}
 	})
 end
@@ -671,6 +847,70 @@ function mod.setupCommandData()
 			Description = '开启一些功能修改',
 			Type = "Command",
 			Function = "openCheatScreen"
+		},
+		{
+			Icon = "TrashButtonFlash",
+			IconScale = 0.6,
+			Name = mod.Locale.ClearAllBoons,
+			Description = mod.Locale.ClearAllBoonsDescription,
+			Type = "Command",
+			Function = "PonyMenu.ClearAllBoons"
+		},
+		{
+			Icon = "CharonPointsDrop",
+			IconScale = 0.6,
+			Name = mod.Locale.BoonManagerTitle,
+			Description = mod.Locale.BoonManagerDescription,
+			Type = "Command",
+			Function = "PonyMenu.OpenBoonManager"
+		},
+		{
+			IconPath = "GUI\\Screens\\Inventory\\Icon-Resources",
+			IconScale = 0.6,
+			Name = mod.Locale.ResourceMenuTitle,
+			Description = mod.Locale.ResourceMenuDescription,
+			Type = "Command",
+			Function = "PonyMenu.OpenResourceMenu"
+		},
+		{
+			IconPath = "Items\\Loot\\MaxHealthDrop_Preview",
+			IconScale = 0.3,
+			Name = mod.Locale.ConsumableSelectorTitle,
+			Description = mod.Locale.ConsumableSelectorDescription,
+			Type = "Command",
+			Function = "PonyMenu.OpenConsumableSelector"
+		},
+		{
+			IconPath = "GUI\\Icons\\Boss",
+			IconScale = 0.6,
+			Name = mod.Locale.BossSelectorTitle,
+			Description = mod.Locale.BossSelectorDescription,
+			Type = "Command",
+			Function = "PonyMenu.OpenBossSelector"
+		},
+		{
+			IconPath = "GUI\\Icons\\NoCanDo",
+			IconScale = 0.6,
+			Name = mod.Locale.KillPlayerTitle,
+			Description = mod.Locale.KillPlayerDescription,
+			Type = "Command",
+			Function = "PonyMenu.KillPlayer"
+		},
+		{
+			IconPath = "GUI\\Shell\\CloudSyncConflict",
+			IconScale = 0.6,
+			Name = mod.Locale.SaveStateTitle,
+			Description = mod.Locale.SaveStateDescription,
+			Type = "Command",
+			Function = "PonyMenu.SaveState"
+		},
+		{
+			IconPath = "GUI\\Shell\\CloudSuccess",
+			IconScale = 0.6,
+			Name = mod.Locale.LoadStateTitle,
+			Description = mod.Locale.LoadStateDescription,
+			Type = "Command",
+			Function = "PonyMenu.LoadState"
 		},
 	}
 end

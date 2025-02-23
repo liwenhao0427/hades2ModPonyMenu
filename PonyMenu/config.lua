@@ -1,6 +1,6 @@
-local mod = ModUtil.Mod.Register("PonyMenu")
-
-mod.Config = {
+local config = {
 	Enabled = true,
 	ColorblindMode = false,
 }
+PonyMenu.Config = config
+return config

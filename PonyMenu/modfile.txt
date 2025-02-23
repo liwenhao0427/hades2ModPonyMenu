@@ -1,4 +1,4 @@
-To Scripts/RoomLogic.lua
+Top Import register.lua
 Top Import config.lua
 Top Import init.lua
 Import Text/en.lua

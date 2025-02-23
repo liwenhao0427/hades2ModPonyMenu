@@ -35,6 +35,26 @@ local function setupMainData()
 		NPC_Athena_01 = {},
 		NPC_Dionysus_01 = {}
 	}
+
+	mod.ConsumableData = {
+		-- "HealDrop",
+		-- "RoomMoneyDrop",
+		-- "MaxHealthDrop",
+		-- "MaxManaDrop",
+		-- "TalentDrop",
+		-- "RerollDrop",
+		-- "LastStandDrop",
+		-- "MinorDodgeDrop",
+		-- "MinorDamageBoost",
+		-- "HitShieldDrop",
+		-- "ArmorBoost",
+		-- "FireBoost",
+		-- "AirBoost",
+		-- "EarthBoost",
+		-- "WaterBoost",
+		-- "ElementalBoost",
+		-- "MinorExDamageBoost",
+	}
 end
 
 function mod.UpdateScreenData()
@@ -195,31 +215,12 @@ ModUtil.Path.Override("InventoryScreenDisplayCategory", function(screen, categor
 				button.Highlight = buttonHighlight
 			
 				if canBePlanted then
-					if HasResource( resourceName, 1 ) then
+					if HasResource(resourceName, 1) then
 						button.ContextualAction = "Menu_Plant"
 						button.OnPressedFunctionName = "GardenPlantSeed"
-						if #GardenData.Seeds[resourceName].RandomOutcomes == 1 then
-							local growsIntoName = GetFirstKey( GardenData.Seeds[resourceName].RandomOutcomes[1].AddResources )
-							local amountNeededByPins = GetResourceAmountNeededByPins( growsIntoName )
-							if amountNeededByPins > 0 then
-								local pinAnimation = "StoreItemPin"
-								if HasResource( growsIntoName, amountNeededByPins ) then
-									pinAnimation = "StoreItemPin_Complete"
-								end
-								button.PinIcon = CreateScreenComponent({
-									Name = "BlankObstacle",
-									Group = "Combat_Menu_Overlay",
-									Scale = screen.SeedPinIconScale,
-									X = resourceLocation.X + screen.SeedPinIconOffsetX,
-									Y = resourceLocation.Y + screen.SeedPinIconOffsetY,
-									Animation = pinAnimation,
-								})
-								components[resourceName.."PinIcon"] = button.PinIcon
-							end
-						end
 					else
 						SetColor({ Id = button.Id, Color = Color.Black })
-						button.MouseOverText = "InventoryScreen_SeedNotAvailable"
+						button.Description = "InventoryScreen_SeedNotAvailable"
 					end
 				elseif canBeGifted then
 					if HasResource( resourceName, 1 ) then
@@ -409,7 +410,7 @@ function mod.PopulateBoonData(upgradeName)
 			local wp = GetEquippedWeapon()
 			for k, v in pairs(LootSetData.Loot[upgradeName].Traits) do
 				local boon = TraitData[v]
-				if boon.CodexWeapon == GetEquippedWeapon() then
+				if boon.RequiredWeapon == GetEquippedWeapon() then
 					index = index + 1
 					mod.BoonData.WeaponUpgrade[index] = v
 				end
@@ -502,10 +503,10 @@ function mod.GetLootColor(upgradeName)
 	elseif upgradeName == "NPC_Circe_01" then
 		color = Color.CirceVoice
 	elseif upgradeName == "NPC_Athena_01" then
-		color = Color.AthenaVoice
-	elseif upgradeName == "NPC_Dionysus_01" then
-		color = Color.DionysusVoice
-	end
+			color = Color.AthenaVoice
+		elseif upgradeName == "NPC_Dionysus_01" then
+			color = Color.DionysusVoice
+		end
 	return color
 end
 
@@ -561,10 +562,296 @@ function mod.IsBoonTrait(traitName)
 	end
 end
 
+function mod.CreateNewCustomRun(room)
+	local prevRun = CurrentRun
+	local args = args or {}
+	SetupRunData()
+	ResetUI()
+
+	CurrentRun = {}
+	RunStateInit()
+
+	if args.RunOverrides ~= nil then
+		for key, value in pairs(args.RunOverrides) do
+			CurrentRun[key] = value
+		end
+	end
+
+	for name, value in pairs(GameState.ShrineUpgrades) do
+		ShrineUpgradeExtractValues(name)
+	end
+
+	CurrentRun.ForceNextEncounterData = args.Encounter
+	CurrentRun.Hero = CreateNewHero(prevRun, args)
+
+	if GameState.WorldUpgrades.WorldUpgradeUnusedWeaponBonus ~= nil then
+		if prevRun ~= nil and prevRun.BonusUnusedWeaponName ~= nil and CurrentRun.Hero.Weapons[prevRun.BonusUnusedWeaponName] then
+			if GameState.WorldUpgrades.UnusedWeaponBonusAddGems then
+				AddTrait(CurrentRun.Hero, "UnusedWeaponBonusTraitAddGems")
+			else
+				AddTrait(CurrentRun.Hero, "UnusedWeaponBonusTrait")
+			end
+		end
+	end
+
+	local bountyData = BountyData[args.ActiveBounty]
+	if bountyData ~= nil and bountyData.StartingTraits ~= nil then
+		for i, traitData in ipairs(bountyData.StartingTraits) do
+			AddTrait(CurrentRun.Hero, traitData.Name, traitData.Rarity)
+		end
+	end
+
+	-- EquipKeepsake(CurrentRun.Hero, GameState.LastAwardTrait, { FromLoot = true, SkipNewTraitHighlight = true })
+	-- EquipAssist(CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true })
+	-- EquipFamiliar(nil, { Unit = CurrentRun.Hero, FamiliarName = GameState.EquippedFamiliar, SkipNewTraitHighlight = true })
+	-- EquipWeaponUpgrade(CurrentRun.Hero, { SkipNewTraitHighlight = true })
+	-- EquipMetaUpgrades(CurrentRun.Hero, { SkipNewTraitHighlight = true })
+	mod.LoadState(true)
+	UpdateRunHistoryCache(CurrentRun)
+	BuildMetaupgradeCache()
+
+
+	CurrentRun.BonusUnusedWeaponName = GetRandomUnequippedWeapon()
+	CurrentRun.ActiveBiomeTimer = GetNumShrineUpgrades("BiomeSpeedShrineUpgrade") > 0
+	CurrentRun.NumRerolls = GetTotalHeroTraitValue("RerollCount")
+	CurrentRun.NumTalentPoints = GetTotalHeroTraitValue("TalentPointCount")
+	CurrentRun.ActiveBounty = args.ActiveBounty
+	CurrentRun.ActiveBountyClears = GameState.PackagedBountyClears[CurrentRun.ActiveBounty] or 0
+	CurrentRun.ActiveBountyAttempts = GameState.PackagedBountyAttempts[CurrentRun.ActiveBounty] or 0
+	CurrentRun.SpellCharge = 5000
+	CurrentRun.ResourceNodesSeen = {}
+
+	if ConfigOptionCache.EasyMode then
+		CurrentRun.EasyModeLevel = GameState.EasyModeLevel
+	end
+
+	InitHeroLastStands(CurrentRun.Hero)
+
+	InitializeRewardStores(CurrentRun)
+	--SelectBannedEliteAttributes( CurrentRun )
+
+	CurrentRun.CurrentRoom = CreateRoom(room, args)
+
+
+	-- if args.RoomName ~= nil then
+	-- 	CurrentRun.CurrentRoom = CreateRoom(RoomData[args.RoomName], args)
+	-- else
+	-- 	CurrentRun.CurrentRoom = ChooseStartingRoom(CurrentRun, args)
+	-- end
+
+	AddResource("Money", CalculateStartingMoney(), "RunStart")
+
+	return CurrentRun
+end
+
+function mod.StartNewCustomRun(room)
+	AddInputBlock({ Name = "StartOver" })
+
+	for index, familiarName in ipairs(FamiliarOrderData) do
+		local familiarData = FamiliarData[familiarName]
+		local familiar = familiarData.Unit
+		if familiar then
+			CleanupEnemy(familiar)
+			familiarData.Unit = nil
+		end
+	end
+
+	local currentRun = CurrentRun
+	EndRun(currentRun)
+	CurrentHubRoom = nil
+	PreviousDeathAreaRoom = nil
+	currentRun = mod.CreateNewCustomRun(room)
+	StopSound({ Id = AudioState.AmbientMusicId, Duration = 1.0 })
+	AudioState.AmbientMusicId = nil
+	AudioState.AmbientTrackName = nil
+	ResetObjectives()
+
+	SetConfigOption({ Name = "FlipMapThings", Value = false })
+	SetConfigOption({ Name = "BlockGameplayTimer", Value = false })
+
+	AddTimerBlock(currentRun, "StartOver")
+
+	RequestSave({ StartNextMap = currentRun.CurrentRoom.Name, SaveName = "_Temp", DevSaveName = CreateDevSaveName(currentRun) })
+	ValidateCheckpoint({ Value = true })
+
+	RemoveInputBlock({ Name = "StartOver" })
+	RemoveTimerBlock(currentRun, "StartOver")
+	AddInputBlock({ Name = "MapLoad" })
+	AddTimerBlock(CurrentRun, "MapLoad")
+
+	LoadMap({ Name = currentRun.CurrentRoom.Name, ResetBinks = true })
+end
+
+function mod.KillPlayer()
+	CurrentRun.Hero.IsDead = false
+	Kill(CurrentRun.Hero)
+end
+
+function mod.SaveState()
+	if CurrentRun.Hero.Traits ~= nil then
+		local wp = GetEquippedWeapon()
+		local aspect = GameState.LastWeaponUpgradeName[wp]
+		local aspectLevel = GetWeaponUpgradeLevel(aspect)
+		mod.Data.SavedState = {
+			Traits = {},
+			MetaUpgrades = {},
+			Weapon = wp,
+			Aspect = { Name = aspect, Rarity = TraitRarityData.WeaponRarityUpgradeOrder[aspectLevel] },
+			Keepsake = GameState.LastAwardTrait,
+			Assist = GameState.LastAssistTrait,
+			Familiar = GameState.EquippedFamiliar,
+		}
+		for i, traitData in pairs(CurrentRun.Hero.Traits) do
+			if
+				not traitData.MetaUpgrade
+				and traitData.Name ~= mod.Data.SavedState.Weapon
+				and traitData.Name ~= mod.Data.SavedState.Aspect.Name
+				and traitData.Name ~= mod.Data.SavedState.Keepsake
+				and traitData.Name ~= mod.Data.SavedState.Assist
+				and traitData.Name ~= mod.Data.SavedState.Familiar
+			then
+				table.insert(mod.Data.SavedState.Traits, { Name = traitData.Name, Rarity = traitData.Rarity, StackNum = traitData.StackNum })
+			elseif traitData.MetaUpgrade then
+
+
+				table.insert(mod.Data.SavedState.MetaUpgrades, {
+					TraitName = traitData.Name,
+					Rarity = traitData.Rarity,
+					CustomMultiplier = traitData.CustomMultiplier,
+					SourceName = traitData.Name
+				})
+			end
+		end
+		SaveCheckpoint({ DevSaveName = CreateDevSaveName(CurrentRun) })
+		PlaySound({ Name = "/SFX/WrathEndingWarning", Id = CurrentRun.Hero.ObjectId })
+		thread(InCombatTextArgs,
+			{
+				TargetId = CurrentRun.Hero.ObjectId,
+				Text = mod.Locale.SaveStateSaved,
+				SkipRise = false,
+				SkipFlash = false,
+				Duration = 1.5,
+				ShadowScaleX = 1.5,
+			})
+	end
+end
+
+function mod.LoadState(newRun)
+	if mod.Data.SavedState ~= nil then
+		if newRun == nil then
+			mod.RemoveAllTraits()
+			ClearUpgrades()
+		end
+		if GameState.LastAwardTrait == "ReincarnationKeepsake" then
+			RemoveLastStand(CurrentRun.Hero, "ReincarnationKeepsake")
+			CurrentRun.Hero.MaxLastStands = CurrentRun.Hero.MaxLastStands - 1
+		end
+		EquipPlayerWeapon(WeaponData[mod.Data.SavedState.Weapon], { LoadPackages = true })
+		if mod.Data.SavedState.Keepsake ~= nil then
+			EquipKeepsake(CurrentRun.Hero, mod.Data.SavedState.Keepsake, { FromLoot = true, SkipNewTraitHighlight = true })
+		end
+		if mod.Data.SavedState.Assist ~= nil then
+			EquipAssist(CurrentRun.Hero, mod.Data.SavedState.Assist, { SkipNewTraitHighlight = true })
+		end
+		if mod.Data.SavedState.Familiar ~= nil then
+			EquipFamiliar(nil, { Unit = CurrentRun.Hero, FamiliarName = mod.Data.SavedState.Familiar, SkipNewTraitHighlight = true })
+		end
+		if mod.Data.SavedState.Aspect.Name ~= nil then
+			AddTraitToHero({ TraitName = mod.Data.SavedState.Aspect.Name, Rarity = mod.Data.SavedState.Aspect.Rarity })
+		end
+		for _, traitData in pairs(mod.Data.SavedState.Traits) do
+			AddTraitToHero({
+				TraitData = GetProcessedTraitData({
+					Unit = CurrentRun.Hero,
+					TraitName = traitData.Name,
+					Rarity = traitData.Rarity,
+					StackNum = traitData.StackNum
+				}),
+				SkipNewTraitHighlight = true
+			})
+		end
+		for _, traitData in pairs(mod.Data.SavedState.MetaUpgrades) do
+			AddTraitToHero({
+				SkipNewTraitHighlight = true,
+				TraitName = traitData.TraitName,
+				Rarity = traitData.Rarity,
+				CustomMultiplier = traitData.CustomMultiplier,
+				SourceName = traitData.SourceName,
+			})
+		end
+		if newRun == nil then
+			PlaySound({ Name = "/SFX/WrathEndingWarning", Id = CurrentRun.Hero.ObjectId })
+			thread(InCombatTextArgs,
+				{
+					TargetId = CurrentRun.Hero.ObjectId,
+					Text = mod.Locale.SaveStateLoaded,
+					SkipRise = false,
+					SkipFlash = false,
+					Duration = 1.5,
+					ShadowScaleX = 1.5,
+				})
+		end
+	end
+end
+
+function mod.GoToTrainingRoom()
+	local prevRun = CurrentRun
+	CurrentRun.Hero = CreateNewHero(prevRun)
+	CurrentRun.Hero.IsDead = true
+	LoadMap({ Name = "Hub_PreRun", ResetBinks = true })
+end
+
+function mod.PopulateConsumableData()
+	local consumableData = DeepCopyTable(ConsumableData)
+	consumableData["BaseConsumable"] = nil
+	consumableData["BaseMetaRoomReward"] = nil
+	consumableData["BaseResource"] = nil
+	consumableData["BaseSuperResource"] = nil
+	consumableData["BaseWellShopConsumable"] = nil
+	consumableData["Tier1Consumable"] = nil
+	consumableData["RandomStoreItem"] = nil
+
+	for key, consumable in pairs(consumableData) do
+		if consumable.AddResources then
+			consumableData[key] = nil
+		else
+			if consumable.Cost then
+				consumable.Cost = 0
+			end
+			if consumable.ResourceCosts then
+				consumable.ResourceCosts = {
+					Money = 0
+				}
+			end
+			if consumable.PurchaseRequirements then
+				consumable.PurchaseRequirements = nil
+			end
+			if consumable.HealFraction and type(consumable.HealFraction) == "table" then
+				consumable.HealFraction = RandomFloat(consumable.HealFraction.BaseMin, consumable.HealFraction.BaseMax)
+			end
+			if consumable.HealthCost and type(consumable.HealthCost) == "table" then
+				consumable.HealthCost = RandomInt(consumable.HealthCost.BaseMin, consumable.HealthCost.BaseMax)
+			end
+		end
+	end
+
+	mod.ConsumableData = consumableData
+end
+
+ModUtil.Path.Wrap("CheckBounties", function(base, source, args)
+	if source.KillHeroOnCompletion then
+		mod.KillPlayer()
+		return true
+	else
+		return base(source, args)
+	end
+end)
+
 ModUtil.LoadOnce(function()
 	for key, value in pairs(mod.BoonData) do
 		mod.PopulateBoonData(key)
 	end
+	mod.PopulateConsumableData()
 end)
 
 mod.Internal = ModUtil.UpValues(function()
