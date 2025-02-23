@@ -1630,15 +1630,16 @@ function mod.ConsumableSelectorLoadPage(screen)
 end
 
 function mod.GiveConsumableToPlayer(screen, button)
-	-- MapState.RoomRequiredObjects = {}
-	if button.Consumable.UseFunctionName and button.Consumable.UseFunctionName == "OpenTalentScreen" then
-		if not CurrentRun.ConsumableRecord["SpellDrop"] then
-			PlaySound({ Name = "/Leftovers/SFX/OutOfAmmo" })
-			return
-		end
-		mod.CloseConsumableSelector(screen)
-	end
-	UseConsumableItem(button.Consumable, {}, CurrentRun.Hero)
+	DropMinorConsumable( button.Consumable.key )
+	-- -- MapState.RoomRequiredObjects = {}
+	-- if button.Consumable.UseFunctionName and button.Consumable.UseFunctionName == "OpenTalentScreen" then
+	-- 	if not CurrentRun.ConsumableRecord["SpellDrop"] then
+	-- 		PlaySound({ Name = "/Leftovers/SFX/OutOfAmmo" })
+	-- 		return
+	-- 	end
+	-- 	mod.CloseConsumableSelector(screen)
+	-- end
+	-- UseConsumableItem(button.Consumable, {}, CurrentRun.Hero)
 end
 
 --#endregion

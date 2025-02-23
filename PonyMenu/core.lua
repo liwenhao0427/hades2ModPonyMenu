@@ -812,6 +812,7 @@ function mod.PopulateConsumableData()
 	consumableData["RandomStoreItem"] = nil
 
 	for key, consumable in pairs(consumableData) do
+		consumable.key = key
 		if consumable.AddResources then
 			consumableData[key] = nil
 		else

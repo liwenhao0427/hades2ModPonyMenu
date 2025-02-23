@@ -22,4 +22,8 @@ ponyMenu部分代码来源是 nexusmods.com N网上的ponyMenu1.0版本，因为
 ponyMenu github地址 https://github.com/PonyWarrior/PonyMenu 如果会用R2Modman的可以试试看用这个版本
 
 # 更新说明
+- 2025.02.23 消耗品改为创建在地上
+- 2025.02.23 增加 立刻挑战Boss功能
+- 2025.02.23 增加 消耗品使用功能
+- 2025.02.23 增加 酒神、雅典娜、美狄亚、伊卡洛斯、喀耳刻
 - 2025.02.22 适配了最新游戏版本，增加了战神阿瑞斯的祝福管理 
