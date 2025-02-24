@@ -660,6 +660,15 @@ end
 
 function mod.setupCommandData()
 	mod.CommandData = {
+        -- 区域守卫
+        {
+            IconPath = "GUI\\Icons\\GhostEmote\\Disgruntled",
+            IconScale = 0.6,
+            Name = mod.Locale.BossSelectorTitle,
+            Description = mod.Locale.BossSelectorDescription,
+            Type = "Command",
+            Function = "PonyMenu.OpenBossSelector"
+        },
 		{
 			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Zeus",
 			IconScale = 0.4,
@@ -741,6 +750,7 @@ function mod.setupCommandData()
 			NoRarity = true,
 			NoSpawn = true
 		},
+-- 		锤子
 		{
 			Icon = "WeaponUpgradeSymbol",
 			IconScale = 0.6,
@@ -851,15 +861,6 @@ function mod.setupCommandData()
 			Description = mod.Locale.ConsumableSelectorDescription,
 			Type = "Command",
 			Function = "PonyMenu.OpenConsumableSelector"
-		},
-		-- 区域守卫
-		{
-			IconPath = "GUI\\Icons\\GhostEmote\\Disgruntled",
-			IconScale = 0.6,
-			Name = mod.Locale.BossSelectorTitle,
-			Description = mod.Locale.BossSelectorDescription,
-			Type = "Command",
-			Function = "PonyMenu.OpenBossSelector"
 		},
 		-- 自杀
 		{

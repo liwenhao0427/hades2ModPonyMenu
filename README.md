@@ -1,3 +1,5 @@
+本项目基于 [ponyMenu] ([https://github.com/PonyWarrior/PonyMenu]) 进行二次开发，原始项目由 [PonyWarrior](https://github.com/PonyWarrior) 贡献，遵循 MIT 许可证。
+
 # 使用方法
 1. 下载后整个文件夹改名为Mods，放到解Hades II\Content目录下，下载[modimporter.exe](https://github.com/SGG-Modding/sgg-mod-modimporter/releases/latest/download/modimporter-windows.zip)，也一同放到Hades II\Content目录下
 2. 双击Hades II\Content\modimporter.exe运行【每次版本更新需要重新运行！】
@@ -16,12 +18,8 @@ Hades II/
 之前版本的压缩包参考： https://wwsf.lanzn.com/islyS2oi95uj
 该版本没有更新阿瑞斯祝福，并且因为之后的版本都是在本仓库维护，这个下载版本在日后有可能会有报错，仅供参考
 
-# 说明
-该Mod用于游戏hades的祝福管理及其他修改。
-ponyMenu部分代码来源是 nexusmods.com N网上的ponyMenu1.0版本，因为原作者后续不再支持modimporter.exe，我又不知道他支持的R2Modman要怎么用，不得已自己在原作者初版代码上做修改
-ponyMenu github地址 https://github.com/PonyWarrior/PonyMenu 如果会用R2Modman的可以试试看用这个版本
-
 # 更新说明
+- 2025.02.24 调整一下按键位置，Boss挑战校验缓存避免报错
 - 2025.02.23 消耗品改为创建在地上
 - 2025.02.23 增加 立刻挑战Boss功能
 - 2025.02.23 增加 消耗品使用功能

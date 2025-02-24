@@ -3,49 +3,49 @@ local mod = PonyMenu
 if not mod.Config.Enabled then return end
 
 mod.AddLocale("zh-CN", {
-    PonyMenuCategoryTitle = "小马选单",
+    PonyMenuCategoryTitle = "幻驹菜单",
 
     ClearAllBoons = "清除所有祝福",
     ClearAllBoonsDescription = "移除所有祝福效果。",
 
     BoonSelectorTitle = "祝福选择器",
-    BoonSelectorSpawnButton = "召唤祝福",
-    BoonSelectorCommonButton = "普通",
-    BoonSelectorRareButton = "稀有",
-    BoonSelectorEpicButton = "史诗",
-    BoonSelectorHeroicButton = "英雄",
+    BoonSelectorSpawnButton = "原地掉落祝福",
+    BoonSelectorCommonButton = "设为普通",
+    BoonSelectorRareButton = "设为稀有",
+    BoonSelectorEpicButton = "设为史诗",
+    BoonSelectorHeroicButton = "设为英雄",
 
     BoonManagerTitle = "祝福管理器",
-    BoonManagerSubtitle = "点击选择加法(+)或剑法(-)，然后选择级别或稀有度模式。",
-    BoonManagerDescription = "打开祝福管理器，方便您管理和升级祝福。",
-    BoonManagerModeSelection = "请选择运作模式",
-    BoonManagerLevelMode = "级别模式",
-    BoonManagerRarityMode = "稀有度模式",
-    BoonManagerDeleteMode = "移除模式",
-    BoonManagerAllModeOff = "所有模式：关闭",
-    BoonManagerAllModeOn = "所有模式：开启",
-    BoonManagerLevelDisplay = "级别：",
+    BoonManagerSubtitle = "点击左下角的等级按钮或稀有度按钮，再次点击可切换升级(+)与降级(-)，最后点击要改变的祝福。",
+    BoonManagerDescription = "打开祝福管理器，可删除或升级您已有的祝福。",
+    BoonManagerModeSelection = "请先选择两侧的功能",
+    BoonManagerLevelMode = "更改等级",
+    BoonManagerRarityMode = "更改稀有度",
+    BoonManagerDeleteMode = "删除",
+    BoonManagerAllModeOff = "全选 : 关",
+    BoonManagerAllModeOn = "全选 ： 开",
+    BoonManagerLevelDisplay = "等级：",
 
-    ResourceMenuTitle = "资源选单",
-    ResourceMenuDescription = "生成任意数量的资源。",
-    ResourceMenuSpawnButton = "生成资源",
+    ResourceMenuTitle = "材料菜单",
+    ResourceMenuDescription = "生成任意数量的材料。",
+    ResourceMenuSpawnButton = "生成材料",
     ResourceMenuEmpty = "空",
 
     BossSelectorTitle = "Boss选择器",
-    BossSelectorDescription = "直接挑战Boss，使用您当前的存档装备。",
-    BossSelectorNoSavedState = "没有存档装备！请先创建装备！",
+    BossSelectorDescription = "让您以存入的套装，直接挑战区域守卫。",
+    BossSelectorNoSavedState = "没有已存入的套装! 请先存一个！",
 
     KillPlayerTitle = "自杀",
-    KillPlayerDescription = "击杀玩家并将其传送到三岔路口。",
+    KillPlayerDescription = "自杀并回到三岔路口。",
 
-    SaveStateTitle = "存储装备",
-    SaveStateDescription = "保存您当前的装备，以便后续加载。用于区域守卫选择器，保存所有装备。",
-    SaveStateSaved = "装备已保存！",
+    SaveStateTitle = "存入套装",
+    SaveStateDescription = "存入您现在的魔宠、祝福、饰品等形成套装，用于区域守卫选择器，或是套装测试。",
+    SaveStateSaved = "已存入套装!",
 
-    LoadStateTitle = "加载装备",
-    LoadStateDescription = "加载您的存档装备。必须先保存装备才能加载。",
-    SaveStateLoaded = "装备已加载！",
+    LoadStateTitle = "加载套装",
+    LoadStateDescription = "加载您的存入套装。",
+    SaveStateLoaded = "已加载套装!",
 
-    ConsumableSelectorTitle = "消耗品选择器",
-    ConsumableSelectorDescription = "生成消耗品，如最大生命、月神祝福等。"
+    ConsumableSelectorTitle = "物品选择器",
+    ConsumableSelectorDescription = "立即获得任意卡戎物品及地图物品，如最大生命、月神祝福、元素等。"
 })

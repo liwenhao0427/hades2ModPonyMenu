@@ -410,7 +410,7 @@ function mod.PopulateBoonData(upgradeName)
 			local wp = GetEquippedWeapon()
 			for k, v in pairs(LootSetData.Loot[upgradeName].Traits) do
 				local boon = TraitData[v]
-				if boon.RequiredWeapon == GetEquippedWeapon() then
+				if boon.CodexWeapon == GetEquippedWeapon() then
 					index = index + 1
 					mod.BoonData.WeaponUpgrade[index] = v
 				end
