@@ -618,7 +618,7 @@ function mod.CreateNewCustomRun(room)
 	CurrentRun.ActiveBounty = args.ActiveBounty
 	CurrentRun.ActiveBountyClears = GameState.PackagedBountyClears[CurrentRun.ActiveBounty] or 0
 	CurrentRun.ActiveBountyAttempts = GameState.PackagedBountyAttempts[CurrentRun.ActiveBounty] or 0
-	CurrentRun.SpellCharge = 5000
+	-- CurrentRun.SpellCharge = 5000
 	CurrentRun.ResourceNodesSeen = {}
 
 	if ConfigOptionCache.EasyMode then
@@ -680,6 +680,8 @@ function mod.StartNewCustomRun(room)
 	AddTimerBlock(CurrentRun, "MapLoad")
 
 	LoadMap({ Name = currentRun.CurrentRoom.Name, ResetBinks = true })
+	-- mod.LoadState(true)
+	-- BuildMetaupgradeCache()
 end
 
 function mod.KillPlayer()
@@ -710,7 +712,11 @@ function mod.SaveState()
 				and traitData.Name ~= mod.Data.SavedState.Assist
 				and traitData.Name ~= mod.Data.SavedState.Familiar
 			then
-				table.insert(mod.Data.SavedState.Traits, { Name = traitData.Name, Rarity = traitData.Rarity, StackNum = traitData.StackNum })
+				if traitData.Slot and traitData.Slot == "Spell" then
+					mod.Data.SavedState.Hex = traitData.Name
+				else
+					table.insert(mod.Data.SavedState.Traits, { Name = traitData.Name, Rarity = traitData.Rarity, StackNum = traitData.StackNum })
+				end
 			elseif traitData.MetaUpgrade then
 
 
@@ -757,7 +763,13 @@ function mod.LoadState(newRun)
 			EquipFamiliar(nil, { Unit = CurrentRun.Hero, FamiliarName = mod.Data.SavedState.Familiar, SkipNewTraitHighlight = true })
 		end
 		if mod.Data.SavedState.Aspect.Name ~= nil then
-			AddTraitToHero({ TraitName = mod.Data.SavedState.Aspect.Name, Rarity = mod.Data.SavedState.Aspect.Rarity })
+			AddTraitToHero({
+				TraitName = mod.Data.SavedState.Aspect.Name,
+				Rarity = mod.Data.SavedState.Aspect.Rarity,
+				SkipNewTraitHighlight = true,
+				SkipQuestStatusCheck = true,
+				SkipActivatedTraitUpdate = true,
+			})
 		end
 		for _, traitData in pairs(mod.Data.SavedState.Traits) do
 			AddTraitToHero({
@@ -767,12 +779,26 @@ function mod.LoadState(newRun)
 					Rarity = traitData.Rarity,
 					StackNum = traitData.StackNum
 				}),
-				SkipNewTraitHighlight = true
+				SkipNewTraitHighlight = true,
+				SkipQuestStatusCheck = true,
+				SkipActivatedTraitUpdate = true,
 			})
+		end
+		if mod.Data.SavedState.Hex ~= nil then
+			AddTraitToHero({
+				TraitName = mod.Data.SavedState.Hex,
+				SkipNewTraitHighlight = true,
+				SkipQuestStatusCheck = true,
+				SkipActivatedTraitUpdate = true,
+			})
+			-- CurrentRun.Hero.SlottedSpell = DeepCopyTable(SpellData[mod.Data.SavedState.Hex])
+			-- CurrentRun.Hero.SlottedSpell.Talents = DeepCopyTable(CreateTalentTree(SpellData[mod.Data.SavedState.Hex]))
 		end
 		for _, traitData in pairs(mod.Data.SavedState.MetaUpgrades) do
 			AddTraitToHero({
 				SkipNewTraitHighlight = true,
+				SkipQuestStatusCheck = true,
+				SkipActivatedTraitUpdate = true,
 				TraitName = traitData.TraitName,
 				Rarity = traitData.Rarity,
 				CustomMultiplier = traitData.CustomMultiplier,

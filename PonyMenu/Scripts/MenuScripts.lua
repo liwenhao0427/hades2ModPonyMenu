@@ -115,7 +115,10 @@ function mod.GiveBoonToPlayer(screen, button)
 				Unit = CurrentRun.Hero,
 				TraitName = boon,
 				Rarity = screen.Rarity
-			})
+			}),
+			SkipNewTraitHighlight = true,
+			SkipQuestStatusCheck = true,
+			SkipActivatedTraitUpdate = true,
 		})
 		screen.BoonsList[screen.CurrentPage][button.Index] = nil
 		local ids = { button.Id }
@@ -450,9 +453,9 @@ end
 
 function mod.ChangeTargetResourceAmount(screen, button)
 	local amount = screen.Amount + button.Amount
-	if amount < 0 then
-		amount = 0
-	end
+	--if amount < 0 then
+	--	amount = 0
+	--end
 	screen.Amount = amount
 	ModifyTextBox({ Id = screen.Components.ResourceAmountTextbox.Id, Text = screen.Amount })
 end
@@ -462,7 +465,16 @@ function mod.SpawnResource(screen, button)
 		return
 	end
 
-	AddResource(screen.Resource, screen.Amount)
+	--AddResource(screen.Resource, screen.Amount)
+	if screen.Amount < 0 then
+		local amount = screen.Amount * -1
+		if amount > GameState.Resources[screen.Resource] then
+			amount = GameState.Resources[screen.Resource]
+		end
+		SpendResource(screen.Resource, amount)
+	else
+		AddResource(screen.Resource, screen.Amount)
+	end
 end
 
 function mod.ResourceMenuLoadPage(screen)
@@ -850,7 +862,10 @@ function mod.HandleBoonManagerClick(screen, button)
 							TraitName = traitData.Name,
 							Rarity = rarity,
 							StackNum = traitData.StackNum
-						})
+						}),
+						SkipNewTraitHighlight = true,
+						SkipQuestStatusCheck = true,
+						SkipActivatedTraitUpdate = true,
 					})
 				end
 				local ids = {}
@@ -888,7 +903,10 @@ function mod.HandleBoonManagerClick(screen, button)
 							TraitName = traitData.Name,
 							Rarity = rarity,
 							StackNum = traitData.StackNum
-						})
+						}),
+						SkipNewTraitHighlight = true,
+						SkipQuestStatusCheck = true,
+						SkipActivatedTraitUpdate = true,
 					})
 				end
 				local ids = {}
@@ -950,7 +968,10 @@ function mod.HandleBoonManagerClick(screen, button)
 							.Name,
 						Rarity = button.Boon.Rarity,
 						StackNum = count
-					})
+					}),
+					SkipNewTraitHighlight = true,
+					SkipQuestStatusCheck = true,
+					SkipActivatedTraitUpdate = true,
 				})
 			end
 			return
@@ -967,7 +988,10 @@ function mod.HandleBoonManagerClick(screen, button)
 							.Name,
 						Rarity = button.Boon.Rarity,
 						StackNum = count
-					})
+					}),
+					SkipNewTraitHighlight = true,
+					SkipQuestStatusCheck = true,
+					SkipActivatedTraitUpdate = true,
 				})
 			end
 			return

@@ -16,7 +16,7 @@ mod.AddLocale("zh-CN", {
     BoonSelectorHeroicButton = "设为英雄",
 
     BoonManagerTitle = "祝福管理器",
-    BoonManagerSubtitle = "点击左下角的等级按钮或稀有度按钮，再次点击可切换升级(+)与降级(-)，最后点击要改变的祝福。",
+    BoonManagerSubtitle = "点击左下角的等级开关或稀有度开关，再次点击可切换升级(+)与降级(-)，最后点击要改变的祝福。",
     BoonManagerDescription = "打开祝福管理器，可删除或升级您已有的祝福。",
     BoonManagerModeSelection = "请先选择两侧的功能",
     BoonManagerLevelMode = "更改等级",
@@ -47,5 +47,8 @@ mod.AddLocale("zh-CN", {
     SaveStateLoaded = "已加载套装!",
 
     ConsumableSelectorTitle = "物品选择器",
-    ConsumableSelectorDescription = "立即获得任意卡戎物品及地图物品，如最大生命、月神祝福、元素等。"
+    ConsumableSelectorDescription = "立即获得任意卡戎物品及地图物品，如最大生命、月神祝福、元素等。",
+
+    extraSelectorTitle = "额外修改内容",
+    extraSelectorDescription = "立即获得额外的物品，如魔宠、祝福、饰品等。",
 })
