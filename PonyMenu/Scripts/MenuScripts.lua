@@ -1034,6 +1034,8 @@ function mod.BoonManagerChangePage(screen, button)
 		mod.BoonSelectorLoadPage(screen)
 	elseif button.Menu == "ConsumableSelector" then
 		mod.ConsumableSelectorLoadPage(screen)
+	elseif button.Menu == "ExtraSelector" then
+		mod.ExtraSelectorLoadPage(screen)
 	end
 end
 
@@ -1656,6 +1658,190 @@ function mod.ConsumableSelectorLoadPage(screen)
 			end
 		end
 	end
+end
+
+mod.flags = { }
+
+function mod.updateExtraSelectorText()
+	local screen = DeepCopyTable(ScreenData.ExtraSelector)
+	for i, button in pairs(ScreenData.ExtraSelector.ComponentData.Background.Children) do
+		if mod.flags[i] then
+			button.TextArgs.Color = Color.Red
+			button.Text = "取消" .. button.Data.OriText
+			CreateScreenFromData(screen, button)
+		else
+			if button.Data.OriText then
+				button.TextArgs.Color = Color.White
+				button.Text = button.Data.OriText
+			end
+		end
+	end
+end
+
+function mod.setFlagForButton(button)
+	if mod.flags[button.Key] then
+		mod.flags[button.Key] = nil
+		ModifyTextBox({ Id = button.Id, Text = button.OriText, Color = Color.White })
+		debugShowText(button.OriText)
+		PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
+	else
+		mod.flags[button.Key] = button.Id
+		ModifyTextBox({ Id = button.Id, Text = "取消" .. button.OriText, Color = Color.Red })
+		debugShowText("取消" .. button.OriText)
+		PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	end
+end
+
+-- 设置必出混沌门
+function mod.setChaosGate(screen, button)
+	mod.setFlagForButton(button)
+	if mod.flags[button.Key] then
+		IsSecretDoorEligible = patchIsSecretDoorEligible(IsSecretDoorEligible)
+	else
+		IsSecretDoorEligible = PreIsSecretDoorEligible
+	end
+end
+
+-- 必定出英雄稀有度祝福
+function mod.setHeroic(screen, button)
+	mod.setFlagForButton(button)
+	if mod.flags[button.Key] then
+		SetTraitsOnLoot = patchSetTraitsOnLoot(SetTraitsOnLoot)
+		SetTransformingTraitsOnLoot = patchSetTransformingTraitsOnLoot(SetTransformingTraitsOnLoot)
+	else
+		SetTraitsOnLoot = PreSetTraitsOnLoot
+		SetTransformingTraitsOnLoot = PreSetTransformingTraitsOnLoot
+	end
+end
+
+-- 不再出现资源房间
+function mod.setNoRewardRoom(screen, button)
+	mod.setFlagForButton(button)
+	if mod.flags[button.Key] then
+		ChooseRoomReward = patchChooseRoomReward(ChooseRoomReward)
+	else
+		ChooseRoomReward = PreChooseRoomReward
+	end
+end
+
+-- 设置无限掷骰
+function mod.setInfiniteRoll(screen, button)
+	mod.setFlagForButton(button)
+	if screen.selectMode == "Use" then
+		infiniteRoll = true
+		AttemptReroll = patchAttemptReroll(AttemptReroll)
+		AttemptPanelReroll = patchAttemptPanelReroll(AttemptPanelReroll)
+		-- 塔罗牌
+		AddTraitToHero({
+			TraitData = GetProcessedTraitData({
+				Unit = CurrentRun.Hero,
+				TraitName = "DoorRerollMetaUpgrade"
+			}),
+			SkipNewTraitHighlight = true,
+			SkipQuestStatusCheck = true,
+			SkipActivatedTraitUpdate = true,
+		})
+		-- 塔罗牌
+		AddTraitToHero({
+			TraitData = GetProcessedTraitData({
+				Unit = CurrentRun.Hero,
+				TraitName = "PanelRerollMetaUpgrade"
+			}),
+			SkipNewTraitHighlight = true,
+			SkipQuestStatusCheck = true,
+			SkipActivatedTraitUpdate = true,
+		})
+	else
+		infiniteRoll = false
+		AttemptReroll = PreAttemptReroll
+		AttemptPanelReroll = PreAttemptPanelReroll
+		--RemoveTrait(CurrentRun.Hero, "DoorRerollMetaUpgrade")
+		--RemoveTrait(CurrentRun.Hero, "PanelRerollMetaUpgrade")
+	end
+end
+
+-- 本轮额外冲刺次数+1
+function mod.setExtrarush(screen, button)
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	AddTraitToHero( { FromLoot = true, TraitData = GetProcessedTraitData( { Unit = CurrentRun.Hero, TraitName = 'CheatExtraRush' , Rarity = "Common" } ) } )
+	curExtraRushCount = 0
+end
+
+-- 金币+100
+function mod.setMoreMoney(screen, button)
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	AddResource( "Money", 100, "RunStart" )
+end
+
+-- 给我恢复
+function mod.setRestoreHealth(screen, button)
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	Heal( CurrentRun.Hero, {HealAmount = 1000 })
+end
+
+-- 给我充能
+function mod.setRestoreMana(screen, button)
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	CurrentRun.Hero.Mana =  CurrentRun.Hero.MaxMana
+	thread( UpdateHealthUI, triggerArgs )
+	thread( UpdateManaMeterUI, triggerArgs )
+end
+
+-- 击杀加1%概率掉落祝福
+function mod.setDropLoot(screen, button)
+	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })
+	metaupgradeDropBoonBoost = metaupgradeDropBoonBoost + 0.01
+	--warningShowTest('                                                      当前概率' .. metaupgradeDropBoonBoost)
+	KillEnemy = patchKill(KillEnemy)
+end
+
+-- 关闭击杀概率掉落祝福
+function mod.setStopDropLoot(screen, button)
+	PlaySound({ Name = "/SFX/Menu Sounds/GeneralWhooshMENU" })
+	metaupgradeDropBoonBoost = 0
+	KillEnemy = PreKillEnemy
+end
+
+-- 打开我的修改页面
+function mod.ExtraSelectorLoadPage()
+	if not initPreFun then
+		PreSetTraitsOnLoot = SetTraitsOnLoot
+		PreKillEnemy = KillEnemy
+		PreSetTransformingTraitsOnLoot = SetTransformingTraitsOnLoot
+		PreIsSecretDoorEligible = IsSecretDoorEligible
+		PreChooseRoomReward = ChooseRoomReward
+		PreAttemptReroll = AttemptReroll
+		PreAttemptPanelReroll = AttemptPanelReroll
+		PreHasAccessToTool = HasAccessToTool
+		initPreFun = true
+	end
+
+	if IsScreenOpen("ExtraSelector") then
+		return
+	end
+	local screen = DeepCopyTable(ScreenData.ExtraSelector)
+
+	mod.BoonManagerPageButtons(screen, screen.Name)
+	mod.UpdateScreenData()
+	--CloseInventoryScreen(screen, screen.ComponentData.ActionBar.Children.CloseButton)
+
+	screen.FirstPage = 0
+	screen.LastPage = 0
+	screen.CurrentPage = screen.FirstPage
+
+	local components = screen.Components
+
+	OnScreenOpened(screen)
+	CreateScreenFromData(screen, screen.ComponentData)
+	SetColor({ Id = components.BackgroundTint.Id, Color = Color.Black })
+	SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.0, Duration = 0 })
+	SetAlpha({ Id = components.BackgroundTint.Id, Fraction = 0.9, Duration = 0.3 })
+	wait(0.3)
+
+	SetConfigOption({ Name = "ExclusiveInteractGroup", Value = "Combat_Menu_TraitTray" })
+	screen.KeepOpen = true
+	HandleScreenInput(screen)
+	mod.updateExtraSelectorText()
 end
 
 function mod.GiveConsumableToPlayer(screen, button)

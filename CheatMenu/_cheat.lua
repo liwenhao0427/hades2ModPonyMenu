@@ -1,11 +1,11 @@
 -- 击杀时有概率掉落祝福
-local metaupgradeDropBoonBoost = 0
+metaupgradeDropBoonBoost = 0
 -- 无限Roll
-local infiniteRoll = false
+infiniteRoll = false
 -- 额外冲刺次数【仅房间生效，获得祝福】
-local extraRushCount = 0
+extraRushCount = 0
 -- 默认配置稀有度
-local RaritySet = 'Rare'
+RaritySet = 'Rare'
 -- CheckRoomExitsReady 不收集资源无法离开
 -- SpawnStoreItemInWorld 喀戎商店
 
@@ -51,8 +51,8 @@ end
 
 
 
-local AddRerolled = false
-local curExtraRushCount = extraRushCount
+AddRerolled = false
+curExtraRushCount = extraRushCount
 -- 每轮游戏刚开始时进行的操作
 function patchEachRun(fun)
     function newFun(prevRun, args)

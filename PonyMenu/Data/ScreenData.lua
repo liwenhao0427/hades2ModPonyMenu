@@ -657,10 +657,10 @@ function mod.setupScreenData()
 		},
 
 		-- 我的额外修改内容
-		extraSelector = {
+		ExtraSelector = {
 			Components = {},
 			OpenSound = "/SFX/Menu Sounds/HadesLocationTextAppear",
-			Name = "extraSelector",
+			Name = "ExtraSelector",
 			RowStartX = -(ScreenCenterX * 0.65),
 			RowStartY = -(ScreenCenterY * 0.5),
 
@@ -689,7 +689,7 @@ function mod.setupScreenData()
 					X = ScreenCenterX,
 					Y = ScreenCenterY,
 					Scale = 1.15,
-					Text = mod.Locale.ConsumableSelectorTitle,
+					Text = mod.Locale.ExtraSelectorTitle,
 					TextArgs =
 					{
 						FontSize = 32,
@@ -704,6 +704,261 @@ function mod.setupScreenData()
 
 					Children =
 					{
+						ChaosGate = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.ChaosGate,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = -(ScreenCenterX * 0.6),
+							OffsetY = -(ScreenCenterY * 0.6),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "ChaosGate",
+								OriText = mod.Locale.ChaosGate,
+								OnPressedFunctionName = mod.setChaosGate,
+							},
+						},
+						InfiniteRoll = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.InfiniteRoll,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = -(ScreenCenterX * 0.2),
+							OffsetY = -(ScreenCenterY * 0.6),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "InfiniteRoll",
+								OriText = mod.Locale.InfiniteRoll,
+								OnPressedFunctionName = mod.setInfiniteRoll,
+							},
+						},
+						Heroic = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.Heroic,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = (ScreenCenterX * 0.2),
+							OffsetY = -(ScreenCenterY * 0.6),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "Heroic",
+								OriText = mod.Locale.Heroic,
+								OnPressedFunctionName = mod.setHeroic,
+							},
+						},
+						NoRewardRoom = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.NoRewardRoom,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = (ScreenCenterX * 0.6),
+							OffsetY = -(ScreenCenterY * 0.6),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "NoRewardRoom",
+								OriText = mod.Locale.NoRewardRoom,
+								OnPressedFunctionName = mod.setNoRewardRoom,
+							},
+						},
+
+
+						Extrarush = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.Extrarush,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = -(ScreenCenterX * 0.6),
+							OffsetY = -(ScreenCenterY * 0.2),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "Extrarush",
+								OriText = mod.Locale.Extrarush,
+								OnPressedFunctionName = mod.setExtrarush,
+							},
+						},
+						MoreMoney = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.MoreMoney,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = -(ScreenCenterX * 0.2),
+							OffsetY = -(ScreenCenterY * 0.2),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "MoreMoney",
+								OriText = mod.Locale.MoreMoney,
+								OnPressedFunctionName = mod.setMoreMoney,
+							},
+						},
+						RestoreHealth = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.RestoreHealth,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = (ScreenCenterX * 0.2),
+							OffsetY = -(ScreenCenterY * 0.2),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "RestoreHealth",
+								OriText = mod.Locale.RestoreHealth,
+								OnPressedFunctionName = mod.setRestoreHealth,
+							},
+						},
+						RestoreMana = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.RestoreMana,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = (ScreenCenterX * 0.6),
+							OffsetY = -(ScreenCenterY * 0.2),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "RestoreMana",
+								OriText = mod.Locale.RestoreMana,
+								OnPressedFunctionName = mod.setNoRestoreMana,
+							},
+						},
+
+
+						DropLoot = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.DropLoot,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = -(ScreenCenterX * 0.6),
+							OffsetY = (ScreenCenterY * 0.2),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "DropLoot",
+								OriText = mod.Locale.DropLoot,
+								OnPressedFunctionName = mod.setDropLoot,
+							},
+						},
+						StopDropLoot = {
+							Name = "ButtonDefault",
+							Text = mod.Locale.StopDropLoot,
+							Group = "Combat_Menu_TraitTray",
+							Scale = 1.2,
+							ScaleX = 0.8,
+							OffsetX = -(ScreenCenterX * 0.2),
+							OffsetY = (ScreenCenterY * 0.2),
+							TextArgs =
+							{
+								FontSize = 22,
+								Width = 720,
+								Color = Color.White,
+								Font = "P22UndergroundSCMedium",
+								ShadowBlur = 0,
+								ShadowColor = { 0, 0, 0, 1 },
+								ShadowOffset = { 0, 2 },
+								Justification = "Center"
+							},
+							Data = {
+								Key = "StopDropLoot",
+								OriText = mod.Locale.StopDropLoot,
+								OnPressedFunctionName = mod.setStopDropLoot,
+							},
+						},
+
 						CloseButton =
 						{
 							Graphic = "ButtonClose",
@@ -720,12 +975,20 @@ function mod.setupScreenData()
 					}
 				},
 			}
-		}
+		},
 	})
 end
 
 function mod.setupCommandData()
 	mod.CommandData = {
+		{
+			IconPath = "GUI\\Icons\\RandomLoot",
+			IconScale = 0.8,
+			Name = mod.Locale.ExtraSelectorTitle,
+			Description = mod.Locale.ExtraSelectorDescription,
+			Type = "Command",
+			Function = "PonyMenu.ExtraSelectorLoadPage"
+		},
         -- 区域守卫
         {
             IconPath = "GUI\\Icons\\GhostEmote\\Disgruntled",

@@ -49,6 +49,33 @@ mod.AddLocale("zh-CN", {
     ConsumableSelectorTitle = "物品选择器",
     ConsumableSelectorDescription = "立即获得任意卡戎物品及地图物品，如最大生命、月神祝福、元素等。",
 
-    extraSelectorTitle = "额外修改内容",
-    extraSelectorDescription = "立即获得额外的物品，如魔宠、祝福、饰品等。",
+    ExtraSelectorTitle = "额外修改内容",
+    ExtraSelectorDescription = "立即获得额外的物品，如魔宠、祝福、饰品等。",
+
+    BoonSelectorExtraConfirmButton = "启用修改功能",
+    BoonSelectorExtraCancelButton = "取消修改功能",
+
+    ChaosGate = "混沌之门",
+    InfiniteRoll = "无限掷骰",
+    Heroic = "必出英雄祝福",
+    NoRewardRoom = "不出现资源房间",
+
+    Extrarush = "冲刺次数+1",
+    MoreMoney = "金币+100",
+    RestoreHealth = "给我恢复",
+    RestoreMana = "给我充能",
+
+    DropLoot = "击杀概率掉落祝福",
+    StopDropLoot = "关闭击杀掉落祝福",
+
+    -- 	"击杀加1%概率掉落祝福",
+    -- 	-- "开启0元购",
+    -- 	"不再出现资源房间",
+    -- 	"本轮额外冲刺次数+1",
+    -- 	"必定出英雄稀有度祝福",
+    -- 	"金币+100",
+    -- 	-- "最大生命+25",
+    -- 	-- "最大法力+25",
+    -- 	"给我恢复",
+    -- 	"给我充能",
 })
