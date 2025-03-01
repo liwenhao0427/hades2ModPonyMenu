@@ -47,6 +47,26 @@ mod.AddLocale("en", {
 	SaveStateLoaded = "State loaded!",
 
 	ConsumableSelectorTitle = "Consumable Selector",
-	ConsumableSelectorDescription = "Give yourself any consumable item."
+	ConsumableSelectorDescription = "Give yourself any consumable item.",
+
+	ExtraSelectorTitle = "Extra Modification",
+	ExtraSelectorDescription = "Get extra items immediately, such as pets, blessings, accessories, etc.",
+
+	BoonSelectorExtraConfirmButton = "Enable Modification",
+	BoonSelectorExtraCancelButton = "Cancel Modification",
+
+	ChaosGate = "Chaos Gate",
+	InfiniteRoll = "Infinite Roll",
+	Heroic = "Guaranteed Heroic Blessing",
+	NoRewardRoom = "No Reward Rooms",
+
+	Extrarush = "Sprint Count +1",
+	MoreMoney = "Gold +100",
+	RestoreHealth = "Restore Health",
+	RestoreMana = "Restore Mana",
+
+	DropLoot = "Blessing Drop on Kill",
+	StopDropLoot = "Disable Blessing Drop on Kill",
+	EphyraZoomOut = "Room Reward Preview",
 
 })

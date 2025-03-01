@@ -47,5 +47,26 @@ mod.AddLocale("fr", {
 	SaveStateLoaded = "Kit équippé!",
 
 	ConsumableSelectorTitle = "Sélecteur de consommables.",
-	ConsumableSelectorDescription = "Donnez vous n'importe quel objet consommable."
+	ConsumableSelectorDescription = "Donnez vous n'importe quel objet consommable.",
+
+	ExtraSelectorTitle = "Modification supplémentaire",
+	ExtraSelectorDescription = "Obtenez immédiatement des objets supplémentaires, tels que des familiers, des bénédictions, des accessoires, etc.",
+
+	BoonSelectorExtraConfirmButton = "Activer la modification",
+	BoonSelectorExtraCancelButton = "Annuler la modification",
+
+	ChaosGate = "Portail du Chaos",
+	InfiniteRoll = "Roulette infinie",
+	Heroic = "Bénédiction héroïque garantie",
+	NoRewardRoom = "Pas de salle de récompenses",
+
+	Extrarush = "Compteur de sprint +1",
+	MoreMoney = "Or +100",
+	RestoreHealth = "Restaurer la santé",
+	RestoreMana = "Restaurer la mana",
+
+	DropLoot = "Bénédiction tombant à la mort",
+	StopDropLoot = "Désactiver la bénédiction tombant à la mort",
+	EphyraZoomOut = "Aperçu des récompenses de la salle",
+
 })

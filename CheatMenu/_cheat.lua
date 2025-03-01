@@ -86,7 +86,7 @@ local replaceList = {
     -- 蜜露
     GiftDrop = {
         target =  'Boon',
-        chance = 0.5,
+        chance = 0.3,
         text =  '蜜露替换为随机祝福',
     },
     Boon = {
@@ -165,13 +165,33 @@ function patchBeforeEachRoom( fun )
         --     AddTraitToHero( { FromLoot = true, TraitData = GetProcessedTraitData( { Unit = CurrentRun.Hero, TraitName = 'CheatExtraRush' , Rarity = "Heroic" } ) } )
         --     curExtraRushCount = 0
         -- end
-        
+        AddResource( "Money", 100, "RunStart" )
         -- 无限Roll
         if infiniteRoll then
+			AddResource( "Money", 10, "RunStart" )
             CurrentRun.NumRerolls = 9
-            if not AddRerolled then 
-                AddTraitToHero( { FromLoot = true, TraitData = GetProcessedTraitData( { Unit = CurrentRun.Hero, TraitName = 'DoorRerollMetaUpgrade' } ) } )
-                AddTraitToHero( { FromLoot = true, TraitData = GetProcessedTraitData( { Unit = CurrentRun.Hero, TraitName = 'PanelRerollMetaUpgrade' } ) } )
+            if not AddRerolled then
+				AddResource( "Money", 1, "RunStart" )
+				-- 塔罗牌
+				AddTraitToHero({
+					TraitData = GetProcessedTraitData({
+						Unit = CurrentRun.Hero,
+						TraitName = "DoorRerollMetaUpgrade"
+					}),
+					SkipNewTraitHighlight = true,
+					SkipQuestStatusCheck = true,
+					SkipActivatedTraitUpdate = true,
+				})
+				-- 塔罗牌
+				AddTraitToHero({
+					TraitData = GetProcessedTraitData({
+						Unit = CurrentRun.Hero,
+						TraitName = "PanelRerollMetaUpgrade"
+					}),
+					SkipNewTraitHighlight = true,
+					SkipQuestStatusCheck = true,
+					SkipActivatedTraitUpdate = true,
+				})
                 AddRerolled = true
             end
         end

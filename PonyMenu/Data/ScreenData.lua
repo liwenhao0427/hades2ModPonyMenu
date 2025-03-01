@@ -959,6 +959,33 @@ function mod.setupScreenData()
 							},
 						},
 
+						--setEphyraZoomOut
+						-- EphyraZoomOut = {
+						-- 	Name = "ButtonDefault",
+						-- 	Text = mod.Locale.EphyraZoomOut,
+						-- 	Group = "Combat_Menu_TraitTray",
+						-- 	Scale = 1.2,
+						-- 	ScaleX = 0.8,
+						-- 	OffsetX = -(ScreenCenterX * 0.2),
+						-- 	OffsetY = (ScreenCenterY * 0.6),
+						-- 	TextArgs =
+						-- 	{
+						-- 		FontSize = 22,
+						-- 		Width = 720,
+						-- 		Color = Color.White,
+						-- 		Font = "P22UndergroundSCMedium",
+						-- 		ShadowBlur = 0,
+						-- 		ShadowColor = { 0, 0, 0, 1 },
+						-- 		ShadowOffset = { 0, 2 },
+						-- 		Justification = "Center"
+						-- 	},
+						-- 	Data = {
+						-- 		Key = "EphyraZoomOut",
+						-- 		OriText = mod.Locale.EphyraZoomOut,
+						-- 		OnPressedFunctionName = mod.setEphyraZoomOut,
+						-- 	},
+						-- },
+
 						CloseButton =
 						{
 							Graphic = "ButtonClose",
@@ -982,8 +1009,8 @@ end
 function mod.setupCommandData()
 	mod.CommandData = {
 		{
-			IconPath = "GUI\\Icons\\RandomLoot",
-			IconScale = 0.8,
+			IconPath = "GUI\\Screens\\BoonIcons\\ErisCurseTrait",
+			IconScale = 0.4,
 			Name = mod.Locale.ExtraSelectorTitle,
 			Description = mod.Locale.ExtraSelectorDescription,
 			Type = "Command",
@@ -992,6 +1019,7 @@ function mod.setupCommandData()
         -- 区域守卫
         {
             IconPath = "GUI\\Icons\\GhostEmote\\Disgruntled",
+            -- IconPath = "GUI\\TyphonBruteMinibossDamagePreviewRing",
             IconScale = 0.6,
             Name = mod.Locale.BossSelectorTitle,
             Description = mod.Locale.BossSelectorDescription,
@@ -1216,14 +1244,14 @@ function mod.setupCommandData()
 			Type = "Command",
 			Function = "PonyMenu.LoadState"
 		},
-		{
-			Icon = "GUI\\Icons\\RandomLoot",
-			IconScale = 0.8,
-			Name = '修改选项',
-			Description = '开启一些额外功能修改',
-			Type = "Command",
-			Function = "openCheatScreen"
-		},
+		--{
+		--	Icon = "GUI\\Icons\\RandomLoot",
+		--	IconScale = 0.8,
+		--	Name = '修改选项',
+		--	Description = '开启一些额外功能修改',
+		--	Type = "Command",
+		--	Function = "openCheatScreen"
+		--},
 	}
 end
 

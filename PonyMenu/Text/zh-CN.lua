@@ -56,7 +56,7 @@ mod.AddLocale("zh-CN", {
     BoonSelectorExtraCancelButton = "取消修改功能",
 
     ChaosGate = "混沌之门",
-    InfiniteRoll = "无限掷骰",
+    InfiniteRoll = "无限Roll",
     Heroic = "必出英雄祝福",
     NoRewardRoom = "不出现资源房间",
 
@@ -67,15 +67,6 @@ mod.AddLocale("zh-CN", {
 
     DropLoot = "击杀概率掉落祝福",
     StopDropLoot = "关闭击杀掉落祝福",
+    EphyraZoomOut = "房间奖励预览",
 
-    -- 	"击杀加1%概率掉落祝福",
-    -- 	-- "开启0元购",
-    -- 	"不再出现资源房间",
-    -- 	"本轮额外冲刺次数+1",
-    -- 	"必定出英雄稀有度祝福",
-    -- 	"金币+100",
-    -- 	-- "最大生命+25",
-    -- 	-- "最大法力+25",
-    -- 	"给我恢复",
-    -- 	"给我充能",
 })

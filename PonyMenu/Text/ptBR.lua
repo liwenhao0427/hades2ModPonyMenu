@@ -47,6 +47,26 @@ mod.AddLocale("pt-BR", {
 	SaveStateLoaded = "Seu salvamento anterior foi carregado!",
 
 	ConsumableSelectorTitle = "Seletor de Consumível",
-	ConsumableSelectorDescription = "Te dá qualquer item consumível."
+	ConsumableSelectorDescription = "Te dá qualquer item consumível.",
+
+	ExtraSelectorTitle = "Modificação Extra",
+	ExtraSelectorDescription = "Obtenha itens extras imediatamente, como mascotes, bênçãos, acessórios, etc.",
+
+	BoonSelectorExtraConfirmButton = "Ativar Modificação",
+	BoonSelectorExtraCancelButton = "Cancelar Modificação",
+
+	ChaosGate = "Portão do Caos",
+	InfiniteRoll = "Rolagem Infinita",
+	Heroic = "Bênção Heroica Garantida",
+	NoRewardRoom = "Sem Sala de Recompensas",
+
+	Extrarush = "Contagem de Corrida +1",
+	MoreMoney = "Ouro +100",
+	RestoreHealth = "Restaurar Saúde",
+	RestoreMana = "Restaurar Mana",
+
+	DropLoot = "Bênção de Morte ao Derrubar",
+	StopDropLoot = "Desativar Bênção de Morte ao Derrubar",
+	EphyraZoomOut = "Prévia de Recompensas da Sala",
 
 })

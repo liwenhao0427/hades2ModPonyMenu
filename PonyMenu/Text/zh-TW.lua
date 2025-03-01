@@ -47,5 +47,26 @@ mod.AddLocale("zh-TW", {
 	SaveStateLoaded = "裝備加載了!",
 
 	ConsumableSelectorTitle = "耗材選擇器",
-	ConsumableSelectorDescription = "自己給您如何耗材。"
+	ConsumableSelectorDescription = "自己給您如何耗材。",
+
+	ExtraSelectorTitle = "額外修改內容",
+	ExtraSelectorDescription = "立即獲得額外的物品，如魔寵、祝福、飾品等。",
+
+	BoonSelectorExtraConfirmButton = "啟用修改功能",
+	BoonSelectorExtraCancelButton = "取消修改功能",
+
+	ChaosGate = "混沌之門",
+	InfiniteRoll = "無限Roll",
+	Heroic = "必出英雄祝福",
+	NoRewardRoom = "不出現資源房間",
+
+	Extrarush = "衝刺次數+1",
+	MoreMoney = "金幣+100",
+	RestoreHealth = "給我恢復",
+	RestoreMana = "給我充能",
+
+	DropLoot = "擊殺概率掉落祝福",
+	StopDropLoot = "關閉擊殺掉落祝福",
+	EphyraZoomOut = "房間獎勳預覽",
+
 })
