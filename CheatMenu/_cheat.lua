@@ -165,13 +165,10 @@ function patchBeforeEachRoom( fun )
         --     AddTraitToHero( { FromLoot = true, TraitData = GetProcessedTraitData( { Unit = CurrentRun.Hero, TraitName = 'CheatExtraRush' , Rarity = "Heroic" } ) } )
         --     curExtraRushCount = 0
         -- end
-        AddResource( "Money", 100, "RunStart" )
         -- 无限Roll
         if infiniteRoll then
-			AddResource( "Money", 10, "RunStart" )
             CurrentRun.NumRerolls = 9
             if not AddRerolled then
-				AddResource( "Money", 1, "RunStart" )
 				-- 塔罗牌
 				AddTraitToHero({
 					TraitData = GetProcessedTraitData({

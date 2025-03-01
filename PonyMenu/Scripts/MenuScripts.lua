@@ -1885,7 +1885,6 @@ end
 
 EphyraZoomOutPre = nil
 function EphyraZoomOut_override( usee )
-	AddResource( "Money", 100, "RunStart" )
 	warningShowTest('1')
 	AddInputBlock({ Name = "EphyraZoomOut" })
 	AddTimerBlock( CurrentRun, "EphyraZoomOut" )

@@ -903,7 +903,7 @@ function mod.setupScreenData()
 							Data = {
 								Key = "RestoreMana",
 								OriText = mod.Locale.RestoreMana,
-								OnPressedFunctionName = mod.setNoRestoreMana,
+								OnPressedFunctionName = mod.setRestoreMana,
 							},
 						},
 
