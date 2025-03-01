@@ -396,7 +396,7 @@ end
 DiyTraitData = {
 	"CheatExtraRush",
 	"CheatTraitSpeed",
-	"DaggerSpecialFanTrait"
+	"DaggerSpecialFanTraitOld"
 	--"StaffExAoETraitX"
 }
 
@@ -504,9 +504,9 @@ OverwriteTableKeys( TraitData,
 
     },
 
-	DaggerSpecialFanTrait =
+	DaggerSpecialFanTraitOld =
 	{
-		Name = "DaggerSpecialFanTrait",
+		Name = "DaggerSpecialFanTraitOld",
 		CustomTitle= "八面神锋",
 		Description = "匕首专属改造，你的特技造成20%额外伤害，且你的武器额外发射16把飞刀。",
 
