@@ -72,5 +72,9 @@ mod.AddLocale("en", {
 	DiyTraitDataTitle = "Custom Blessing",
 	DiyTraitDataDescription = "Use the custom blessing created by the author",
 
+	BossHealthLoot = "Show Boss Health",
+	QuitAnywhere = "Quit Anytime",
+	PermanentLocationCount = "Always Show Room Count",
+
 
 })

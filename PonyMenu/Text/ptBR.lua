@@ -72,4 +72,9 @@ mod.AddLocale("pt-BR", {
 	DiyTraitDataTitle = "Bênção Personalizada",
 	DiyTraitDataDescription = "Use a bênção personalizada criada pelo autor",
 
+	BossHealthLoot = "Exibir Vida do Boss",
+	QuitAnywhere = "Sair a Qualquer Momento",
+	PermanentLocationCount = "Exibir Sempre o Número de Salas",
+
+
 })

@@ -2,6 +2,52 @@ local mod = PonyMenu
 
 if not mod.Config.Enabled then return end
 
+
+mod.Xsize = 0.7
+mod.Ysize = 0.6
+mod.TestIndexX = -1
+mod.TestIndexY = -1
+mod.Linex = 5  -- 每行的对象数量
+mod.Liney = 5  -- 总共的行数
+
+function mod.calPosX()
+	mod.TestIndexX = mod.TestIndexX + 1
+	return -mod.Xsize + (mod.TestIndexX % mod.Linex) * (mod.Xsize * 2 / (mod.Linex - 1))  -- 横坐标，按比例分布
+end
+
+function mod.calPosY()
+	mod.TestIndexY = mod.TestIndexY + 1
+	return -mod.Ysize + math.floor(mod.TestIndexY / mod.Linex) * (mod.Ysize * 2 / (mod.Liney - 1))  -- 纵坐标，按比例分布
+end
+
+function mod.genBtn(Name, OnPressedFunctionName)
+	return {
+		Name = "ButtonDefault",
+		Text = mod.Locale[Name],
+		Group = "Combat_Menu_TraitTray",
+		Scale = 1.2,
+		ScaleX = 0.8,
+		OffsetX = ScreenCenterX * mod.calPosX(),
+		OffsetY = ScreenCenterY * mod.calPosY(),
+		TextArgs =
+		{
+			FontSize = 22,
+			Width = 720,
+			Color = Color.White,
+			Font = "P22UndergroundSCMedium",
+			ShadowBlur = 0,
+			ShadowColor = { 0, 0, 0, 1 },
+			ShadowOffset = { 0, 2 },
+			Justification = "Center"
+		},
+		Data = {
+			Key = Name,
+			OriText = mod.Locale[Name],
+			OnPressedFunctionName = OnPressedFunctionName,
+		},
+	}
+end
+
 function mod.setupScreenData()
 	ModUtil.Table.Merge(ScreenData, {
 		BoonSelector = {
@@ -704,260 +750,20 @@ function mod.setupScreenData()
 
 					Children =
 					{
-						ChaosGate = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.ChaosGate,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = -(ScreenCenterX * 0.6),
-							OffsetY = -(ScreenCenterY * 0.6),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "ChaosGate",
-								OriText = mod.Locale.ChaosGate,
-								OnPressedFunctionName = mod.setChaosGate,
-							},
-						},
-						InfiniteRoll = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.InfiniteRoll,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = -(ScreenCenterX * 0.2),
-							OffsetY = -(ScreenCenterY * 0.6),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "InfiniteRoll",
-								OriText = mod.Locale.InfiniteRoll,
-								OnPressedFunctionName = mod.setInfiniteRoll,
-							},
-						},
-						Heroic = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.Heroic,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = (ScreenCenterX * 0.2),
-							OffsetY = -(ScreenCenterY * 0.6),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "Heroic",
-								OriText = mod.Locale.Heroic,
-								OnPressedFunctionName = mod.setHeroic,
-							},
-						},
-						NoRewardRoom = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.NoRewardRoom,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = (ScreenCenterX * 0.6),
-							OffsetY = -(ScreenCenterY * 0.6),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "NoRewardRoom",
-								OriText = mod.Locale.NoRewardRoom,
-								OnPressedFunctionName = mod.setNoRewardRoom,
-							},
-						},
-
-
-						Extrarush = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.Extrarush,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = -(ScreenCenterX * 0.6),
-							OffsetY = -(ScreenCenterY * 0.2),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "Extrarush",
-								OriText = mod.Locale.Extrarush,
-								OnPressedFunctionName = mod.setExtrarush,
-							},
-						},
-						MoreMoney = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.MoreMoney,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = -(ScreenCenterX * 0.2),
-							OffsetY = -(ScreenCenterY * 0.2),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "MoreMoney",
-								OriText = mod.Locale.MoreMoney,
-								OnPressedFunctionName = mod.setMoreMoney,
-							},
-						},
-						RestoreHealth = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.RestoreHealth,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = (ScreenCenterX * 0.2),
-							OffsetY = -(ScreenCenterY * 0.2),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "RestoreHealth",
-								OriText = mod.Locale.RestoreHealth,
-								OnPressedFunctionName = mod.setRestoreHealth,
-							},
-						},
-						RestoreMana = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.RestoreMana,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = (ScreenCenterX * 0.6),
-							OffsetY = -(ScreenCenterY * 0.2),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "RestoreMana",
-								OriText = mod.Locale.RestoreMana,
-								OnPressedFunctionName = mod.setRestoreMana,
-							},
-						},
-
-
-						DropLoot = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.DropLoot,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = -(ScreenCenterX * 0.6),
-							OffsetY = (ScreenCenterY * 0.2),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "DropLoot",
-								OriText = mod.Locale.DropLoot,
-								OnPressedFunctionName = mod.setDropLoot,
-							},
-						},
-						StopDropLoot = {
-							Name = "ButtonDefault",
-							Text = mod.Locale.StopDropLoot,
-							Group = "Combat_Menu_TraitTray",
-							Scale = 1.2,
-							ScaleX = 0.8,
-							OffsetX = -(ScreenCenterX * 0.2),
-							OffsetY = (ScreenCenterY * 0.2),
-							TextArgs =
-							{
-								FontSize = 22,
-								Width = 720,
-								Color = Color.White,
-								Font = "P22UndergroundSCMedium",
-								ShadowBlur = 0,
-								ShadowColor = { 0, 0, 0, 1 },
-								ShadowOffset = { 0, 2 },
-								Justification = "Center"
-							},
-							Data = {
-								Key = "StopDropLoot",
-								OriText = mod.Locale.StopDropLoot,
-								OnPressedFunctionName = mod.setStopDropLoot,
-							},
-						},
+						ChaosGate = mod.genBtn("ChaosGate", mod.setChaosGate),
+						InfiniteRoll = mod.genBtn("InfiniteRoll", mod.setInfiniteRoll),
+						Heroic = mod.genBtn("Heroic", mod.setHeroic),
+						NoRewardRoom = mod.genBtn("NoRewardRoom", mod.setNoRewardRoom),
+						Extrarush = mod.genBtn("Extrarush", mod.setExtrarush),
+						MoreMoney = mod.genBtn("MoreMoney", mod.setMoreMoney),
+						RestoreHealth = mod.genBtn("RestoreHealth", mod.setRestoreHealth),
+						RestoreMana = mod.genBtn("RestoreMana", mod.setRestoreMana),
+						DropLoot = mod.genBtn("DropLoot", mod.setDropLoot),
+						StopDropLoot = mod.genBtn("StopDropLoot", mod.setStopDropLoot),
+						BossHealthLoot = mod.genBtn("BossHealthLoot", mod.BossHealthLoot),
+						QuitAnywhere = mod.genBtn("QuitAnywhere", mod.QuitAnywhere),
+						PermanentLocationCount = mod.genBtn("PermanentLocationCount", mod.PermanentLocationCount),
+						EphyraZoomOut = mod.genBtn("EphyraZoomOut", mod.setEphyraZoomOut),
 
 						--setEphyraZoomOut
 						-- EphyraZoomOut = {

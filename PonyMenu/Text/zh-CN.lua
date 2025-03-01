@@ -67,9 +67,13 @@ mod.AddLocale("zh-CN", {
 
     DropLoot = "击杀概率掉落祝福",
     StopDropLoot = "关闭击杀掉落祝福",
-    EphyraZoomOut = "房间奖励预览",
+    EphyraZoomOut = "房间奖励预览【无效】",
 
     DiyTraitDataTitle = "自定义祝福",
     DiyTraitDataDescription = "使用作者创建的自定义祝福",
+
+    BossHealthLoot = "Boss显示血量",
+    QuitAnywhere = "随时退出",
+    PermanentLocationCount = "始终显示房间数",
 
 })

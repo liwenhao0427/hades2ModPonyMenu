@@ -72,4 +72,9 @@ mod.AddLocale("fr", {
 	DiyTraitDataTitle = "Bénédiction personnalisée",
 	DiyTraitDataDescription = "Utilisez la bénédiction personnalisée créée par l'auteur",
 
+	BossHealthLoot = "Afficher la santé du boss",
+	QuitAnywhere = "Quitter à tout moment",
+	PermanentLocationCount = "Afficher toujours le nombre de pièces",
+
+
 })
