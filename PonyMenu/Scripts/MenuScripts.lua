@@ -22,6 +22,11 @@ function mod.OpenBoonSelector(screen, button)
 		mod.PopulateBoonData("WeaponUpgrade")
 	end
 
+	if screen.Upgrade == "DiyTraitData" then
+		mod.BoonData.DiyTraitData = {}
+		mod.PopulateBoonData("DiyTraitData")
+	end
+
 	local itemData = button.ItemData
 	local components = screen.Components
 	local children = screen.ComponentData.Background.Children
@@ -278,7 +283,19 @@ function mod.BoonSelectorLoadPage(screen)
 				descriptionText.Id = button.Id
 				descriptionText.Text = upgradeDescription
 				descriptionText.LuaValue = tooltipData
-				CreateTextBoxWithFormat(descriptionText)
+				-- 自定义创建文本
+				if isInDiyTraitData(boonData.Name) then
+					CreateTextBox({ Id = button.Id, Font = "P22UndergroundSCMedium",
+									Text = boonData.Description,
+									FontSize = 18,
+									Width = 800,
+									OffsetY = 0,
+									OffsetX = -250,
+									tion = "Left",
+									Color = Color.Gray })
+				else
+					CreateTextBoxWithFormat(descriptionText)
+				end
 				if traitData.StatLines ~= nil then
 					local appendToId = nil
 					if #traitData.StatLines <= 1 then

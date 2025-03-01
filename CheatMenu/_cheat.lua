@@ -396,15 +396,32 @@ function warningShowTest(text)
 end
 
 
+DiyTraitData = {
+	"CheatExtraRush",
+	"CheatTraitSpeed",
+	--"StaffExAoETraitX"
+}
+
+function isInDiyTraitData(str)
+	for _, value in ipairs(DiyTraitData) do
+		if value == str then
+			return true
+		end
+	end
+	return false
+end
+
 
 -- 自定义祝福列表
-OverwriteTableKeys( TraitData, 
+OverwriteTableKeys( TraitData,
 {
     CheatExtraRush = {
         Name= 'CheatExtraRush',
+		CustomTitle= "额外冲刺",
+		Description = "获得额外冲刺次数",
 		InheritFrom = { "BaseTrait", "LegacyTrait", "AirBoon" },
 		BlockStacking = true,
-		Icon = "Boon_Hermes_01",
+		Icon = "Boon_Poseidon_36",
 		RarityLevels =
 		{
 			Common =
@@ -421,9 +438,9 @@ OverwriteTableKeys( TraitData,
 			},
 			Heroic =
 			{
-				Multiplier = extraRushCount,
+				Multiplier = 10.00,
 			}
-		},		
+		},
 		PropertyChanges =
 		{
 			{
@@ -434,23 +451,12 @@ OverwriteTableKeys( TraitData,
 				ReportValues = { ReportedBonusSprint = "ChangeValue"},
 			},
 		},
-		
-		StatLines =
-		{
-			"BonusDashStatDisplay1",
-		},
-		ExtractValues =
-		{
-			{
-					Key = "ReportedBonusSprint",
-					ExtractAs = "TooltipSprintBonus",
-			},
-		}
 	},
-    CheatTraitSpeed =
-    {
-        Name = "ApolloSprintBoon",
-        InheritFrom = { "BaseTrait", "LegacyTrait", "WaterBoon" },
+    CheatTraitSpeed = {
+        Name = "CheatTraitSpeed",
+		CustomTitle= "额外移速",
+		Description = "获得额外移速",
+		InheritFrom = { "BaseTrait", "LegacyTrait", "WaterBoon" },
 		Icon = "Boon_Poseidon_36",
 		BlockStacking = true,
 		RarityLevels =
@@ -482,12 +488,12 @@ OverwriteTableKeys( TraitData,
 		-- 		BaseMax = 6,
 		-- 		AsInt = true,
 		-- 	},
-		-- 	ReportValues = 
+		-- 	ReportValues =
 		-- 	{
 		-- 		ReportedDamage = "Damage"
 		-- 	},
 		-- },
-        PropertyChanges = 
+        PropertyChanges =
 		{
 			{
 				UnitProperty = "Speed",
@@ -497,13 +503,78 @@ OverwriteTableKeys( TraitData,
 				ReportValues = { ReportedBaseSpeed = "ChangeValue" },
 			},
 		},
-		
+
     },
+
+	StaffExAoETraitX = {
+		InheritFrom = { "WeaponTrait", "StaffHammerTrait" },
+		Icon = "Hammer_Staff_30",
+		GameStateRequirements =
+		{
+			{
+				Path = { "CurrentRun", "Hero", "Weapons", },
+				HasAll = { "WeaponStaffSwing", },
+			},
+			{
+				Path = { "CurrentRun", "Hero", "TraitDictionary", },
+				HasNone = { "StaffAttackRecoveryTrait", },
+			},
+		},
+		IsLastPriorityHammerTrait = true,
+		PropertyChanges =
+		{
+			{
+				WeaponName = "WeaponStaffSwing5",
+				ExcludeLinked = true,
+				WeaponProperties =
+				{
+					ProjectileAngleOffsetScaleY = 0.6,
+					ProjectileAngleResetCount = 8,
+					ProjectileAngleOffset = math.rad(45),
+					ProjectileAngleStartOffset = 0,
+					ProjectileOffset = 120,
+					ProjectileSpacing = 0,
+					ProjectileInterval = 0.005,
+					AimLineCountOverride = 8,
+					AimLineAngleOffsetOverride = math.rad(45),
+				},
+			},
+			{
+				FalseTraitName = "StaffOneWayAttackTrait",
+				WeaponName = "WeaponStaffSwing5",
+				WeaponProperty = "NumProjectiles",
+				ChangeType = "Absolute",
+				ChangeValue = 8,
+			},
+			{
+				TraitName = "StaffOneWayAttackTrait",
+				WeaponName = "WeaponStaffSwing5",
+				WeaponProperty = "NumProjectiles",
+				ChangeType = "Absolute",
+				ChangeValue = 8,
+			},
+		},
+
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeaponMultiplier =
+			{
+				BaseValue = 1.5,
+				SourceIsMultiplier = true,
+			},
+			ValidWeapons = { "WeaponStaffSwing5" },
+			ReportValues = { ReportedWeaponMultiplier = "ValidWeaponMultiplier"},
+		},
+		ExtractValues =
+		{
+			{
+				Key = "ReportedWeaponMultiplier",
+				ExtractAs = "DamageIncrease",
+				Format = "PercentDelta",
+			},
+		}
+	},
 })
-
-
-
-
 
 
 

@@ -1016,6 +1016,14 @@ function mod.setupCommandData()
 			Type = "Command",
 			Function = "PonyMenu.ExtraSelectorLoadPage"
 		},
+		{
+			Icon = "CharonPointsDrop",
+			IconScale = 0.6,
+			Name = mod.Locale.BoonManagerTitle,
+			Description = mod.Locale.BoonManagerDescription,
+			Type = "Command",
+			Function = "PonyMenu.OpenBoonManager"
+		},
         -- 区域守卫
         {
             IconPath = "GUI\\Icons\\GhostEmote\\Disgruntled",
@@ -1026,6 +1034,14 @@ function mod.setupCommandData()
             Type = "Command",
             Function = "PonyMenu.OpenBossSelector"
         },
+		{
+			IconPath = "GUI\\Screens\\BoonIcons\\Trait_SurfacePenalty",
+			IconScale = 0.4,
+			Name = "DiyTraitData",
+			Description = mod.Locale.DiyTraitDataDescription,
+			Type = "Boon",
+			NoSpawn = true
+		},
 		{
 			IconPath = "GUI\\Screens\\BoonSelectSymbols\\Zeus",
 			IconScale = 0.4,
@@ -1194,14 +1210,7 @@ function mod.setupCommandData()
 			Type = "Command",
 			Function = "PonyMenu.ClearAllBoons"
 		},
-		{
-			Icon = "CharonPointsDrop",
-			IconScale = 0.6,
-			Name = mod.Locale.BoonManagerTitle,
-			Description = mod.Locale.BoonManagerDescription,
-			Type = "Command",
-			Function = "PonyMenu.OpenBoonManager"
-		},
+
 		-- 资源
 		{
 			IconPath = "GUI\\Screens\\Inventory\\Icon-Resources",

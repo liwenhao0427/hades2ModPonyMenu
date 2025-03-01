@@ -69,4 +69,7 @@ mod.AddLocale("zh-CN", {
     StopDropLoot = "关闭击杀掉落祝福",
     EphyraZoomOut = "房间奖励预览",
 
+    DiyTraitDataTitle = "自定义祝福",
+    DiyTraitDataDescription = "使用作者创建的自定义祝福",
+
 })
