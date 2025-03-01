@@ -69,4 +69,7 @@ mod.AddLocale("fr", {
 	StopDropLoot = "Désactiver la bénédiction tombant à la mort",
 	EphyraZoomOut = "Aperçu des récompenses de la salle",
 
+	DiyTraitDataTitle = "Bénédiction personnalisée",
+	DiyTraitDataDescription = "Utilisez la bénédiction personnalisée créée par l'auteur",
+
 })

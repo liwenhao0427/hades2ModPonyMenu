@@ -69,4 +69,8 @@ mod.AddLocale("en", {
 	StopDropLoot = "Disable Blessing Drop on Kill",
 	EphyraZoomOut = "Room Reward Preview",
 
+	DiyTraitDataTitle = "Custom Blessing",
+	DiyTraitDataDescription = "Use the custom blessing created by the author",
+
+
 })

@@ -399,6 +399,7 @@ end
 DiyTraitData = {
 	"CheatExtraRush",
 	"CheatTraitSpeed",
+	"DaggerSpecialFanTrait"
 	--"StaffExAoETraitX"
 }
 
@@ -506,67 +507,75 @@ OverwriteTableKeys( TraitData,
 
     },
 
-	StaffExAoETraitX = {
-		InheritFrom = { "WeaponTrait", "StaffHammerTrait" },
-		Icon = "Hammer_Staff_30",
+	DaggerSpecialFanTrait =
+	{
+		Name = "DaggerSpecialFanTrait",
+		CustomTitle= "八面神锋",
+		Description = "匕首专属改造，你的特技造成20%额外伤害，且你的武器额外发射16把飞刀。",
+
+		InheritFrom = { "WeaponTrait", "DaggerHammerTrait" },
+		Icon = "Hammer_Daggers_34",
 		GameStateRequirements =
 		{
 			{
 				Path = { "CurrentRun", "Hero", "Weapons", },
-				HasAll = { "WeaponStaffSwing", },
+				HasAll = { "WeaponDagger", },
 			},
 			{
 				Path = { "CurrentRun", "Hero", "TraitDictionary", },
-				HasNone = { "StaffAttackRecoveryTrait", },
+				HasNone = { "DaggerSpecialLineTrait", },
 			},
 		},
-		IsLastPriorityHammerTrait = true,
-		PropertyChanges =
-		{
-			{
-				WeaponName = "WeaponStaffSwing5",
-				ExcludeLinked = true,
-				WeaponProperties =
-				{
-					ProjectileAngleOffsetScaleY = 0.6,
-					ProjectileAngleResetCount = 8,
-					ProjectileAngleOffset = math.rad(45),
-					ProjectileAngleStartOffset = 0,
-					ProjectileOffset = 120,
-					ProjectileSpacing = 0,
-					ProjectileInterval = 0.005,
-					AimLineCountOverride = 8,
-					AimLineAngleOffsetOverride = math.rad(45),
-				},
-			},
-			{
-				FalseTraitName = "StaffOneWayAttackTrait",
-				WeaponName = "WeaponStaffSwing5",
-				WeaponProperty = "NumProjectiles",
-				ChangeType = "Absolute",
-				ChangeValue = 8,
-			},
-			{
-				TraitName = "StaffOneWayAttackTrait",
-				WeaponName = "WeaponStaffSwing5",
-				WeaponProperty = "NumProjectiles",
-				ChangeType = "Absolute",
-				ChangeValue = 8,
-			},
-		},
-
 		AddOutgoingDamageModifiers =
 		{
 			ValidWeaponMultiplier =
 			{
-				BaseValue = 1.5,
+				BaseValue = 1.2,
 				SourceIsMultiplier = true,
 			},
-			ValidWeapons = { "WeaponStaffSwing5" },
+			ValidWeapons = { "WeaponDaggerThrow" },
 			ReportValues = { ReportedWeaponMultiplier = "ValidWeaponMultiplier"},
+			ExcludeLinked = true,
+		},
+		WeaponDataOverride =
+		{
+			WeaponDaggerThrow =
+			{
+				ChargeWeaponStages =
+				{
+					{ ManaCost = 6, WeaponProperties = { Projectile = "ProjectileDaggerThrowCharged", FireGraphic = "Melinoe_Dagger_SpecialEx_Fire", NumProjectiles = 4}, ApplyEffects = { "WeaponDaggerThrowEXDisable", "WeaponDaggerThrowEXDisableCancellable", "WeaponDaggerThrowEXDisableMoveHold" }, Wait = 0.32, ChannelSlowEventOnEnter = true },
+					{ ManaCost = 8, WeaponProperties = { NumProjectiles = 6 }, ApplyEffects = { "WeaponDaggerThrowEXDisable", "WeaponDaggerThrowEXDisableCancellable", "WeaponDaggerThrowEXDisableMoveHold" }, Wait = 0.1, },
+					{ ManaCost = 10, WeaponProperties = { NumProjectiles = 8}, ApplyEffects = { "WeaponDaggerThrowEXDisable", "WeaponDaggerThrowEXDisableCancellable", "WeaponDaggerThrowEXDisableMoveHold" }, Wait = 0.1, },
+					{ ManaCost = 12, WeaponProperties = { NumProjectiles  = 10}, ApplyEffects = { "WeaponDaggerThrowEXDisable", "WeaponDaggerThrowEXDisableCancellable", "WeaponDaggerThrowEXDisableMoveHold" }, Wait = 0.1, },
+					{ ManaCost = 14, WeaponProperties = { NumProjectiles  = 12}, ApplyEffects = { "WeaponDaggerThrowEXDisable", "WeaponDaggerThrowEXDisableCancellable", "WeaponDaggerThrowEXDisableMoveHold" }, Wait = 0.1, },
+					{ ManaCost = 16, WeaponProperties = { NumProjectiles  = 13}, ApplyEffects = { "WeaponDaggerThrowEXDisable", "WeaponDaggerThrowEXDisableCancellable", "WeaponDaggerThrowEXDisableMoveHold" }, Wait = 0.1, },
+					{ ManaCost = 18, WeaponProperties = { NumProjectiles  = 15}, ApplyEffects = { "WeaponDaggerThrowEXDisable", "WeaponDaggerThrowEXDisableCancellable", "WeaponDaggerThrowEXDisableMoveHold" }, Wait = 0.1, },
+					{ ManaCost = 20, WeaponProperties = { NumProjectiles  = 16, ReportValues = { ReportedAmount = "NumProjectiles" } }, ApplyEffects = { "WeaponDaggerThrowEXDisable", "WeaponDaggerThrowEXDisableCancellable", "WeaponDaggerThrowEXDisableMoveHold" }, Wait = 0.06, },
+				},
+			}
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponName = "WeaponDaggerThrow",
+				WeaponProperties =
+				{
+					ProjectileAngleOffset = math.rad(22.5),
+					ProjectileInterval = 0.015,
+				},
+				ProjectileProperties =
+				{
+					DrawDuringPause = false,
+				},
+				ExcludeLinked = true
+			},
 		},
 		ExtractValues =
 		{
+			{
+				Key = "ReportedAmount",
+				ExtractAs = "Amount",
+			},
 			{
 				Key = "ReportedWeaponMultiplier",
 				ExtractAs = "DamageIncrease",
@@ -574,6 +583,7 @@ OverwriteTableKeys( TraitData,
 			},
 		}
 	},
+
 })
 
 

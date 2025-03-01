@@ -290,8 +290,8 @@ function mod.BoonSelectorLoadPage(screen)
 									FontSize = 18,
 									Width = 800,
 									OffsetY = 0,
-									OffsetX = -250,
-									tion = "Left",
+									OffsetX = -360,
+									Justification = "Left",
 									Color = Color.Gray })
 				else
 					CreateTextBoxWithFormat(descriptionText)
@@ -1231,7 +1231,20 @@ function mod.BoonManagerLoadPage(screen)
 				descriptionText.Id = button.Id
 				descriptionText.Text = upgradeDescription
 				descriptionText.LuaValue = tooltipData
-				CreateTextBoxWithFormat(descriptionText)
+
+				-- 自定义创建文本
+				if isInDiyTraitData(boonData.boon.Name) then
+					CreateTextBox({ Id = button.Id, Font = "P22UndergroundSCMedium",
+									Text = boonData.boon.Description,
+									FontSize = 18,
+									Width = 800,
+									OffsetY = 0,
+									OffsetX = -360,
+									Justification = "Left",
+									Color = Color.Gray })
+				else
+					CreateTextBoxWithFormat(descriptionText)
+				end
 				if traitData.StatLines ~= nil then
 					local appendToId = nil
 					if #traitData.StatLines <= 1 then

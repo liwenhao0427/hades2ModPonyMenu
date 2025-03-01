@@ -69,4 +69,7 @@ mod.AddLocale("pt-BR", {
 	StopDropLoot = "Desativar Bênção de Morte ao Derrubar",
 	EphyraZoomOut = "Prévia de Recompensas da Sala",
 
+	DiyTraitDataTitle = "Bênção Personalizada",
+	DiyTraitDataDescription = "Use a bênção personalizada criada pelo autor",
+
 })
