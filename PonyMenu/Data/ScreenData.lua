@@ -764,6 +764,7 @@ function mod.setupScreenData()
 						QuitAnywhere = mod.genBtn("QuitAnywhere", mod.QuitAnywhere),
 						PermanentLocationCount = mod.genBtn("PermanentLocationCount", mod.PermanentLocationCount),
 						EphyraZoomOut = mod.genBtn("EphyraZoomOut", mod.setEphyraZoomOut),
+						RepeatableChaosTrials = mod.genBtn("RepeatableChaosTrials", mod.RepeatableChaosTrials),
 
 						--setEphyraZoomOut
 						-- EphyraZoomOut = {

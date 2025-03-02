@@ -50,7 +50,8 @@ mod.AddLocale("en", {
 	ConsumableSelectorDescription = "Give yourself any consumable item.",
 
 	ExtraSelectorTitle = "Extra Modification",
-	ExtraSelectorDescription = "Get extra items immediately, such as pets, blessings, accessories, etc.",
+	ExtraSelectorDescription = "Some additional cheat options. Includes Infinite Roll, guaranteed Chaos Room, always available Heroic Rare Blessings, etc.",
+
 
 	BoonSelectorExtraConfirmButton = "Enable Modification",
 	BoonSelectorExtraCancelButton = "Cancel Modification",
@@ -76,5 +77,6 @@ mod.AddLocale("en", {
 	QuitAnywhere = "Quit Anytime",
 	PermanentLocationCount = "Always Show Room Count",
 
+	RepeatableChaosTrials = "Chaos Blessings Repeatable",
 
 })

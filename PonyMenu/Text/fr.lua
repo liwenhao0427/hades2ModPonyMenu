@@ -50,7 +50,8 @@ mod.AddLocale("fr", {
 	ConsumableSelectorDescription = "Donnez vous n'importe quel objet consommable.",
 
 	ExtraSelectorTitle = "Modification supplémentaire",
-	ExtraSelectorDescription = "Obtenez immédiatement des objets supplémentaires, tels que des familiers, des bénédictions, des accessoires, etc.",
+	ExtraSelectorDescription = "Quelques options supplémentaires de triche. Inclut la Roue infinie, la chambre du Chaos garantie, toujours des bénédictions héroïques rares, etc.",
+
 
 	BoonSelectorExtraConfirmButton = "Activer la modification",
 	BoonSelectorExtraCancelButton = "Annuler la modification",
@@ -76,5 +77,6 @@ mod.AddLocale("fr", {
 	QuitAnywhere = "Quitter à tout moment",
 	PermanentLocationCount = "Afficher toujours le nombre de pièces",
 
+	RepeatableChaosTrials = "Bénédictions du Chaos répétables",
 
 })

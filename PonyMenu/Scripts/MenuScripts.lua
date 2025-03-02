@@ -2186,6 +2186,20 @@ function mod.BossHealthLoot(screen, button)
 	end)
 end
 
+-- 混沌祝福可以重复
+function mod.RepeatableChaosTrials(screen, button)
+	mod.setOnForButton(button)
+	ModUtil.Path.Override("BountyBoardScreenDisplayCategory", function(screen, categoryIndex)
+		BountyBoardScreenDisplayCategory_override(screen, categoryIndex)
+	end)
+
+	ModUtil.Path.Wrap("MouseOverBounty", function(base, button)
+		base(button)
+		if GameState.BountiesCompleted[button.Data.Name] then
+			SetAlpha({ Id = button.Screen.Components.SelectButton.Id, Fraction = 1.0, Duration = 0.2 })
+		end
+	end)
+end
 
 function mod.PermanentLocationCount(screen, button)
 	mod.setOnForButton(button)

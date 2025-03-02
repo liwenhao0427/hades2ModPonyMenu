@@ -50,7 +50,8 @@ mod.AddLocale("pt-BR", {
 	ConsumableSelectorDescription = "Te dá qualquer item consumível.",
 
 	ExtraSelectorTitle = "Modificação Extra",
-	ExtraSelectorDescription = "Obtenha itens extras imediatamente, como mascotes, bênçãos, acessórios, etc.",
+	ExtraSelectorDescription = "Algumas opções adicionais de trapaça. Inclui Rolagem Infinita, Sala do Caos garantida, sempre Blessings Raros Heroicos, etc.",
+
 
 	BoonSelectorExtraConfirmButton = "Ativar Modificação",
 	BoonSelectorExtraCancelButton = "Cancelar Modificação",
@@ -76,5 +77,6 @@ mod.AddLocale("pt-BR", {
 	QuitAnywhere = "Sair a Qualquer Momento",
 	PermanentLocationCount = "Exibir Sempre o Número de Salas",
 
+	RepeatableChaosTrials = "Bênçãos do Caos Repetíveis",
 
 })

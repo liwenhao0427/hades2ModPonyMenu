@@ -50,7 +50,7 @@ mod.AddLocale("zh-CN", {
     ConsumableSelectorDescription = "立即获得任意卡戎物品及地图物品，如最大生命、月神祝福、元素等。",
 
     ExtraSelectorTitle = "额外修改内容",
-    ExtraSelectorDescription = "立即获得额外的物品，如魔宠、祝福、饰品等。",
+    ExtraSelectorDescription = "一些额外的作弊功能选项。包括无限Roll、必出混沌房间、永远出现英雄稀有度祝福等",
 
     BoonSelectorExtraConfirmButton = "启用修改功能",
     BoonSelectorExtraCancelButton = "取消修改功能",
@@ -75,5 +75,7 @@ mod.AddLocale("zh-CN", {
     BossHealthLoot = "Boss显示血量",
     QuitAnywhere = "随时退出",
     PermanentLocationCount = "始终显示房间数",
+
+    RepeatableChaosTrials = "混沌祝福可重复",
 
 })

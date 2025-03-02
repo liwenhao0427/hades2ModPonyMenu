@@ -50,7 +50,8 @@ mod.AddLocale("zh-TW", {
 	ConsumableSelectorDescription = "自己給您如何耗材。",
 
 	ExtraSelectorTitle = "額外修改內容",
-	ExtraSelectorDescription = "立即獲得額外的物品，如魔寵、祝福、飾品等。",
+	ExtraSelectorDescription = "一些額外的作弊功能選項。包括無限Roll、必出混沌房間、永遠出現英雄稀有度祝福等",
+
 
 	BoonSelectorExtraConfirmButton = "啟用修改功能",
 	BoonSelectorExtraCancelButton = "取消修改功能",
@@ -75,6 +76,7 @@ mod.AddLocale("zh-TW", {
 	BossHealthLoot = "顯示Boss血量",
 	QuitAnywhere = "隨時退出",
 	PermanentLocationCount = "始終顯示房間數",
+	RepeatableChaosTrials = "混沌祝福可重複",
 
 
 })
