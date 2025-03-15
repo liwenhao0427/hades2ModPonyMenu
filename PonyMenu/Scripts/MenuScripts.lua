@@ -2263,7 +2263,7 @@ function mod.FreeToBuy(screen, button)
 		HasResources = patchHasResources(HasResources)
 		HasResource = patchHasResource(HasResource)
 		HasResourceCost = patchHasResourceCost(HasResourceCost)
-		RequireAffordableMetaUpgrade = patchRequireAffordableMetaUpgrade(RequireAffordableMetaUpgrade)
+		-- RequireAffordableMetaUpgrade = patchRequireAffordableMetaUpgrade(RequireAffordableMetaUpgrade)
 		GetCurrentMetaUpgradeCost = patchGetCurrentMetaUpgradeCost(GetCurrentMetaUpgradeCost)
 	else
 		SpendResource = PreSpendResource
@@ -2271,7 +2271,7 @@ function mod.FreeToBuy(screen, button)
 		HasResources = PreHasResources
 		HasResource = PreHasResource
 		HasResourceCost = PreHasResourceCost
-		RequireAffordableMetaUpgrade = PreRequireAffordableMetaUpgrade
+		-- RequireAffordableMetaUpgrade = PreRequireAffordableMetaUpgrade
 		GetCurrentMetaUpgradeCost = PreGetCurrentMetaUpgradeCost
 	end
 end
