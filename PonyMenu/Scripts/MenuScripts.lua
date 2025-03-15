@@ -2232,7 +2232,15 @@ function patchHasResource( fun )
 end
 function patchHasResourceCost( fun )
 	function newFun( resourceCosts )
-		return true
+		if not resourceCosts then
+			return false
+		end
+		for name, amount in pairs( resourceCosts ) do
+			if amount > 0 then
+				return true
+			end
+		end
+		return false
 	end
 	return newFun
 end
@@ -2259,18 +2267,18 @@ function mod.FreeToBuy(screen, button)
 	mod.setFlagForButton(button)
 	if mod.flags[button.Key] then
 		SpendResource = patchSpendResource(SpendResource)
-		-- SpendResources = patchSpendResources(SpendResources)
+		SpendResources = patchSpendResources(SpendResources)
 		HasResources = patchHasResources(HasResources)
 		HasResource = patchHasResource(HasResource)
-		HasResourceCost = patchHasResourceCost(HasResourceCost)
+		-- HasResourceCost = patchHasResourceCost(HasResourceCost)
 		-- RequireAffordableMetaUpgrade = patchRequireAffordableMetaUpgrade(RequireAffordableMetaUpgrade)
 		GetCurrentMetaUpgradeCost = patchGetCurrentMetaUpgradeCost(GetCurrentMetaUpgradeCost)
 	else
 		SpendResource = PreSpendResource
-		-- SpendResources = PreSpendResources
+		SpendResources = PreSpendResources
 		HasResources = PreHasResources
 		HasResource = PreHasResource
-		HasResourceCost = PreHasResourceCost
+		-- HasResourceCost = PreHasResourceCost
 		-- RequireAffordableMetaUpgrade = PreRequireAffordableMetaUpgrade
 		GetCurrentMetaUpgradeCost = PreGetCurrentMetaUpgradeCost
 	end
