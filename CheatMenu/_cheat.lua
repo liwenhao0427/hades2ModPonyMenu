@@ -191,6 +191,10 @@ function patchBeforeEachRoom( fun )
 				})
                 AddRerolled = true
             end
+			-- local trait = GetHeroTrait("MetaToRunMetaUpgrade")
+			-- if trait and trait.MetaConversionUses then
+			-- 	trait.MetaConversionUses = 3
+			-- end 
         end
     end
 	return newFun
@@ -204,6 +208,9 @@ function patchAttemptReroll( fun )
         local lastRoll = run.NumRerolls 
         fun(run, target)
         run.NumRerolls = lastRoll
+		if trait and trait.MetaConversionUses then
+			trait.MetaConversionUses = 99
+		end 
     end
 	return newFun
 end
@@ -214,6 +221,9 @@ function patchAttemptPanelReroll(fun)
         local lastRoll = CurrentRun.NumRerolls 
         fun(screen, button)
         CurrentRun.NumRerolls = lastRoll
+		if trait and trait.MetaConversionUses then
+			trait.MetaConversionUses = 99
+		end 
     end
 	return newFun
 end

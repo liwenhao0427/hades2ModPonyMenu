@@ -1778,6 +1778,10 @@ function mod.setInfiniteRoll(screen, button)
 		AttemptReroll = patchAttemptReroll(AttemptReroll)
 		AttemptPanelReroll = patchAttemptPanelReroll(AttemptPanelReroll)
 		RunStateInit = patchBeforeEachRoom(RunStateInit)
+		local trait = GetHeroTrait("MetaToRunMetaUpgrade")
+		if trait and trait.MetaConversionUses then
+			trait.MetaConversionUses = 99
+		end 
 		RerollCosts.Hammer = 1
 	else
 		infiniteRoll = false
