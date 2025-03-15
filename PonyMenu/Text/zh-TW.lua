@@ -71,12 +71,13 @@ mod.AddLocale("zh-TW", {
 	EphyraZoomOut = "房間獎勳預覽",
 
 	DiyTraitDataTitle = "自訂祝福",
-	DiyTraitDataDescription = "使用作者創建的自訂祝福",
+	DiyTraitDataDescription = "使用作者創建的自訂祝福，或先前移除的官方祝福（這些祝福可能完全沒有作用）",
 
 	BossHealthLoot = "顯示Boss血量",
 	QuitAnywhere = "隨時退出",
 	PermanentLocationCount = "始終顯示房間數",
 	RepeatableChaosTrials = "混沌祝福可重複",
 
+    FreeToBuy = "0元购",
 
 })

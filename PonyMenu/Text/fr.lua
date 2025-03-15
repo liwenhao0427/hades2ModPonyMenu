@@ -71,12 +71,13 @@ mod.AddLocale("fr", {
 	EphyraZoomOut = "Aperçu des récompenses de la salle",
 
 	DiyTraitDataTitle = "Bénédiction personnalisée",
-	DiyTraitDataDescription = "Utilisez la bénédiction personnalisée créée par l'auteur",
+	DiyTraitDataDescription = "Utilisez des bénédictions personnalisées créées par l'auteur, ou des bénédictions précédemment supprimées par les développeurs (ces bénédictions peuvent ne pas avoir d'effet du tout)",
 
 	BossHealthLoot = "Afficher la santé du boss",
 	QuitAnywhere = "Quitter à tout moment",
 	PermanentLocationCount = "Afficher toujours le nombre de pièces",
 
 	RepeatableChaosTrials = "Bénédictions du Chaos répétables",
+	FreeToBuy = "Gratuit à acheter",
 
 })

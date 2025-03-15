@@ -765,6 +765,7 @@ function mod.setupScreenData()
 						PermanentLocationCount = mod.genBtn("PermanentLocationCount", mod.PermanentLocationCount),
 						EphyraZoomOut = mod.genBtn("EphyraZoomOut", mod.setEphyraZoomOut),
 						RepeatableChaosTrials = mod.genBtn("RepeatableChaosTrials", mod.RepeatableChaosTrials),
+						FreeToBuy = mod.genBtn("FreeToBuy", mod.FreeToBuy),
 
 						--setEphyraZoomOut
 						-- EphyraZoomOut = {

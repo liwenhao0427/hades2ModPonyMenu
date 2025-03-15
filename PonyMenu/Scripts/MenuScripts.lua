@@ -1778,10 +1778,12 @@ function mod.setInfiniteRoll(screen, button)
 		AttemptReroll = patchAttemptReroll(AttemptReroll)
 		AttemptPanelReroll = patchAttemptPanelReroll(AttemptPanelReroll)
 		RunStateInit = patchBeforeEachRoom(RunStateInit)
+		RerollCosts.Hammer = 1
 	else
 		infiniteRoll = false
 		AttemptReroll = PreAttemptReroll
 		AttemptPanelReroll = PreAttemptPanelReroll
+		RerollCosts.Hammer = -1
 		--RemoveTrait(CurrentRun.Hero, "DoorRerollMetaUpgrade")
 		--RemoveTrait(CurrentRun.Hero, "PanelRerollMetaUpgrade")
 	end
@@ -2201,6 +2203,79 @@ function mod.RepeatableChaosTrials(screen, button)
 	end)
 end
 
+function patchSpendResource( fun )
+	function newFun(name, amount, source, args)
+		-- return true
+		-- 父函数，照常执行
+		fun(name, 0, source, args)
+	end
+	return newFun
+end
+function patchSpendResources( fun )
+	function newFun(resourceCosts, source, args )
+		-- 父函数，照常执行
+		fun(nil, source, args )
+	end
+	return newFun
+end
+function patchHasResources( fun )
+	function newFun(resourceCost )
+		return true
+	end
+	return newFun
+end
+function patchHasResource( fun )
+	function newFun( name, amount )
+		return true
+	end
+	return newFun
+end
+function patchHasResourceCost( fun )
+	function newFun( resourceCosts )
+		return true
+	end
+	return newFun
+end
+
+function patchRequireAffordableMetaUpgrade(fun)
+	function newFun( source, args )
+		return true
+	end
+	return newFun
+end
+
+function patchGetCurrentMetaUpgradeCost( upgradeName )
+	function newFun( )
+		return 0
+	end
+	return newFun
+end
+
+PreRequireAffordableMetaUpgrade = nil
+PreGetCurrentMetaUpgradeCost = nil
+
+-- 免费购买
+function mod.FreeToBuy(screen, button)
+	mod.setFlagForButton(button)
+	if mod.flags[button.Key] then
+		SpendResource = patchSpendResource(SpendResource)
+		-- SpendResources = patchSpendResources(SpendResources)
+		HasResources = patchHasResources(HasResources)
+		HasResource = patchHasResource(HasResource)
+		HasResourceCost = patchHasResourceCost(HasResourceCost)
+		RequireAffordableMetaUpgrade = patchRequireAffordableMetaUpgrade(RequireAffordableMetaUpgrade)
+		GetCurrentMetaUpgradeCost = patchGetCurrentMetaUpgradeCost(GetCurrentMetaUpgradeCost)
+	else
+		SpendResource = PreSpendResource
+		-- SpendResources = PreSpendResources
+		HasResources = PreHasResources
+		HasResource = PreHasResource
+		HasResourceCost = PreHasResourceCost
+		RequireAffordableMetaUpgrade = PreRequireAffordableMetaUpgrade
+		GetCurrentMetaUpgradeCost = PreGetCurrentMetaUpgradeCost
+	end
+end
+
 function mod.PermanentLocationCount(screen, button)
 	mod.setOnForButton(button)
 	ModUtil.Path.Wrap("ShowHealthUI", function(base)
@@ -2238,6 +2313,9 @@ function mod.setEphyraZoomOut(screen, button)
 	end
 end
 
+PreHasResource = nil
+PreHasResourceCost = nil
+
 -- 打开我的修改页面
 function mod.ExtraSelectorLoadPage()
 	if not initPreFun then
@@ -2249,6 +2327,13 @@ function mod.ExtraSelectorLoadPage()
 		PreAttemptReroll = AttemptReroll
 		PreAttemptPanelReroll = AttemptPanelReroll
 		PreHasAccessToTool = HasAccessToTool
+		PreSpendResource = SpendResource
+		PreSpendResources = SpendResources
+		PreHasResources = HasResources
+		PreHasResource = HasResource
+		PreHasResourceCost = HasResourceCost
+		PreRequireAffordableMetaUpgrade = RequireAffordableMetaUpgrade
+		PreGetCurrentMetaUpgradeCost = GetCurrentMetaUpgradeCost
 		initPreFun = true
 		EphyraZoomOutPre = EphyraZoomOut
 	end

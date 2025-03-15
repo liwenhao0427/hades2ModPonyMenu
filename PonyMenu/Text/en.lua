@@ -71,12 +71,13 @@ mod.AddLocale("en", {
 	EphyraZoomOut = "Room Reward Preview",
 
 	DiyTraitDataTitle = "Custom Blessing",
-	DiyTraitDataDescription = "Use the custom blessing created by the author",
+	DiyTraitDataDescription = "Use custom blessings created by the author, or previously removed official blessings (these blessings may have no effect at all)",
 
 	BossHealthLoot = "Show Boss Health",
 	QuitAnywhere = "Quit Anytime",
 	PermanentLocationCount = "Always Show Room Count",
 
 	RepeatableChaosTrials = "Chaos Blessings Repeatable",
+	FreeToBuy = "Free to Buy",
 
 })

@@ -263,7 +263,9 @@ PreChooseRoomReward = nil
 PreAttemptReroll = nil
 PreAttemptPanelReroll = nil
 PreHasAccessToTool = nil
-
+PreSpendResource = nil
+PreSpendResources = nil
+PreHasResources = nil
 
 
 function openCheatScreen() 
@@ -393,12 +395,7 @@ function warningShowTest(text)
 end
 
 
-DiyTraitData = {
-	"CheatExtraRush",
-	"CheatTraitSpeed",
-	"DaggerSpecialFanTraitOld"
-	--"StaffExAoETraitX"
-}
+
 
 function isInDiyTraitData(str)
 	for _, value in ipairs(DiyTraitData) do
@@ -581,8 +578,527 @@ OverwriteTableKeys( TraitData,
 		}
 	},
 
+
+	AxeComboSwingTraitOld = 
+	{
+		Name = "AxeComboSwingTraitOld",
+		CustomTitle= "斧头连击",
+		Description = "斧头专属改造,攻击速度提升",
+
+		InheritFrom = { "WeaponTrait", "AxeHammerTrait" },
+		Icon = "Hammer_Axe_32",
+		GameStateRequirements =
+		{
+			{
+				Path = { "CurrentRun", "Hero", "Weapons", },
+				HasAll = { "WeaponAxe", },
+			},
+		},
+		OnWeaponFiredFunctions = 
+		{
+			ValidWeapons = { "WeaponAxe2" },
+			ExcludeLinked = true,
+			FunctionName = "SpeedUpSpecial",
+			FunctionArgs = 
+			{
+				ChargeMultiplier = 0.1,
+				Window = 0.8,
+			}
+
+		},
+
+	},
+
+
+	AxeConsecutiveStrikeTraitOld = 
+	{
+		Name = "AxeConsecutiveStrikeTraitOld",
+		CustomTitle= "执念旋风",
+		Description = "斧专属改造,连续命中时伤害提升",
+		InheritFrom = { "WeaponTrait", "AxeHammerTrait" },
+		Icon = "Hammer_Axe_31",	
+		GameStateRequirements =
+		{
+			{
+				Path = { "CurrentRun", "Hero", "Weapons", },
+				HasAll = { "WeaponAxe", },
+			},
+			{
+				Path = { "CurrentRun", "Hero", "TraitDictionary", },
+				HasNone = { "AxeAttackRecoveryTrait" },
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponName = "WeaponAxeSpin",
+				ProjectileProperties = 
+				{
+					ConsecutiveHitWindow = 0.25,
+					DamagePerConsecutiveHit = 2,
+					ReportValues = { ReportedDamage = "DamagePerConsecutiveHit"},
+				},
+			}
+		},
+		
+		ExtractValues =
+		{
+			{
+				Key = "ReportedDamage",
+				ExtractAs = "Damage",
+			},
+		}
+	},
+
+	ApolloMissStrikeBoonOld =
+	{
+		Name = "ApolloMissStrikeBoonOld",
+		CustomTitle= "技高一筹",
+		Description = "阿波洛祝福,闪避时造成致命一击",
+		Icon = "Boon_Apollo_38",
+		InheritFrom = { "BaseTrait", "AirBoon" },
+		RarityLevels =
+		{
+			Common =
+			{
+				Multiplier = 1.0,
+			},
+			Rare =
+			{
+				Multiplier = 1.5,
+			},
+			Epic =
+			{
+				Multiplier = 2.0,
+			},
+			Heroic =
+			{
+				Multiplier = 2.5,
+			},
+		},
+		OnDodgeFunction = 
+		{
+			FunctionName = "ApolloBlindStrike",
+			RunOnce = true,
+			FunctionArgs =
+			{
+				ValidActiveEffectGenus = "Blind",
+				ProjectileName = "ApolloPerfectDashStrike",
+				DamageMultiplier = { 
+					BaseValue = 1,
+					MinMultiplier = 0.1,
+					IdenticalMultiplier =
+					{
+						Value = -0.5,
+						DiminishingReturnsMultiplier = 0.8,
+					}, 
+				},
+				Cooldown = 0.2,
+				ReportValues = { ReportedMultiplier = "DamageMultiplier"},
+			},
+		},
+		
+	},
+
+
+	DaggerSpecialRangeTraitOld = 
+	{
+		Name = "DaggerSpecialRangeTraitOld",
+		CustomTitle= "远射",
+		Description = "匕首专属改造，你的特技距离更远，并且超出650码后造成双倍伤害。",
+		InheritFrom = { "WeaponTrait", "DaggerHammerTrait" },
+		Icon = "Hammer_Daggers_37",
+		GameStateRequirements =
+		{
+			{
+				Path = { "CurrentRun", "Hero", "Weapons", },
+				HasAll = { "WeaponDagger", },
+			},
+		},
+		AddOutgoingDamageModifiers =
+		{
+			ValidWeapons = { "WeaponDaggerThrow" },
+			ExcludeLinked = true,
+			DistanceThreshold = 650,
+			DistanceMultiplier =
+			{
+				BaseValue = 2,
+				SourceIsMultiplier = true,
+			},
+			ReportValues = { ReportedWeaponMultiplier = "DistanceMultiplier"},
+		},
+		ChargeStageModifiers = 
+		{
+			ValidWeapons = { "WeaponDaggerThrow", },
+			RevertProjectileProperties = 
+			{
+				Range = true,
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponName = "WeaponDaggerThrow",
+				ProjectileName = "ProjectileDaggerThrow",
+				ProjectileProperties = 
+				{
+					Range = 1400,
+				},
+			},
+		},
+	},
+	DaggerRepeatStrikeTraitOld = 
+	{
+		Name = "DaggerRepeatStrikeTraitOld",
+		CustomTitle= "自动攻击",
+		Description = "匕首专属改造，长安自动攻击",
+		InheritFrom = { "WeaponTrait", "DaggerHammerTrait" },
+		Icon = "Hammer_Daggers_37",
+		GameStateRequirements =
+		{
+			{
+				Path = { "CurrentRun", "Hero", "Weapons", },
+				HasAll = { "WeaponDagger", },
+			},
+		},
+		PropertyChanges =
+		{
+			{
+				WeaponName = "WeaponDaggerMultiStab",
+				ExcludeLinked = true,
+				WeaponProperties = 
+				{
+					FullyAutomatic = true,
+					ControlWindow = 0.6,
+					SwapOnFire = "WeaponDaggerMultiStab",
+					AddOnFire = "null",
+					LoseControlIfNotCharging = true,
+					ForceReleaseOnSwap = false,
+				}
+			},
+		},
+	},
+
+	RandomDuoBoon = 
+	{
+		Name = "RandomDuoBoon",
+		CustomTitle= "觥筹交错",
+		Description = "获得一个今夜你接受过的奥林匹斯神的随机双重祝福。",
+		InheritFrom = { "BaseTrait", "WaterBoon" },
+		Icon = "Boon_Dionysus_33",
+		
+		AcquireFunctionName = "GrantEligibleDuo",
+		AcquireFunctionArgs = 
+		{
+			SkipRequirements = true,		-- Skip prereq traits
+			Count = 1,
+			BlockedTraits = 
+			{
+				SuperSacrificeBoonHera = true,
+				SuperSacrificeBoonZeus = true,
+			},
+			ReportValues = { ReportedCount = "Count"}
+		},
+	},
+
+
+	CoverRegenerationBoonOld = -- Apollo x Hestia
+	{
+		Name = "CoverRegenerationBoonOld",
+		CustomTitle= "凤凰涅槃",
+		Description = "牺牲100最大生命。如果你在一段时间内没有造成伤害，也没有受到伤害，快速恢复生命。",
+		InheritFrom = {"SynergyTrait"},
+		Icon = "Boon_Hestia_42",
+		
+		OnEnemyDamagedAction = 
+		{
+			ValidWeapons = WeaponSets.HeroAllWeapons,
+			FunctionName = "InterruptRegen",
+		},
+		SetupFunction = 
+		{
+			Name = "OutOfCombatRegenSetup",
+			Args = 
+			{
+				Timeout = 3, -- Time before regen kicks in
+				Regen = 3, -- Per second regen
+				RegenStartFx = nil,
+				RegenStartSound = nil,
+				ReportValues =
+				{
+					ReportedTimeout = "Timeout",
+					ReportedRegen = "Regen",
+				}
+			}
+		},
+		PropertyChanges =
+		{
+			{
+				LuaProperty = "MaxHealth",
+				ChangeValue = -100,
+				ChangeType = "Add",
+				AsInt = true,
+				ReportValues = { ReportedHealthPenalty = "ChangeValue"},
+			},
+		},
+		StatLines = 
+		{
+			"CoverRegenStatDisplay1",
+		},
+		CustomStatLinesWithShrineUpgrade = 
+		{
+			ShrineUpgradeName = "HealingReductionShrineUpgrade",
+			StatLines = 
+			{
+				"CoverRegenStatDisplay1",
+				"HealingReductionNotice",
+			},
+		},
+	},
+
+	EchoRepeatKeepsakeBoonOld = 
+	{
+		Name = "EchoRepeatKeepsakeBoonOld",
+		CustomTitle= "信物{#Echo1}信物{#Prev}{#Echo2}信物",
+		Description = "在下一个{$Keywords.Biome}中，获得你当前{$Keywords.KeepsakeAlt}的全部效果{#ItalicLightFormat}（即使你之后更换了信物）。",
+		InheritFrom = { "BaseEcho" },
+		Icon = "Boon_Echo_07",
+		TrayStatLines = 
+		{
+			"RepeatKeepsakeStatDisplay",
+		},
+		ActivatedTrayText = "EchoRepeatKeepsakeBoon_Inactive",
+		RepeatedKeepsake = "",
+		AcquireFunctionName = "EchoRepeatKeepsake",
+	},
+
+	ElementalDodgeBoonOld = 
+	{
+		Name = "ElementalDodgeBoonOld",
+		CustomTitle= "轻盈如风",
+		Description = "每有一个{!Icons.CurseAir}系祝福，获得{$Keywords.Dodge}概率。",
+		InheritFrom = {"UnityTrait"},
+		Icon = "Boon_Aphrodite_33",
+		GameStateRequirements = 
+		{
+			{
+				Path = { "CurrentRun", "Hero", "Elements", "Air" },
+				Comparison = ">=",
+				Value = 2,
+			},
+		},
+		ElementalMultipliers = 
+		{
+			Air = true,
+		},		
+		RarityLevels =
+		{
+			Common =
+			{
+				Multiplier = 1
+			},
+		},
+		PropertyChanges = 
+		{
+			{
+				LifeProperty = "DodgeChance",
+				BaseValue = 0.03,
+				ChangeType = "Add",
+				MultipliedByElement = "Air",
+				DataValue = false,
+				ReportValues = 
+				{ 
+					ReportedTotalDodgeBonus = "ChangeValue",
+					ReportedDodgeBonus = "BaseValue",
+				},
+			},
+		},
+		StatLines =
+		{
+			"ElementalDodgeStatDisplay1",
+		},
+		TrayStatLines = 
+		{
+			"TotalDodgeChanceStatDisplay1",
+		},
+		ExtractValues =
+		{
+			{
+				Key = "ReportedTotalDodgeBonus",
+				ExtractAs = "TooltipTotalDodgeBonus",
+				Format = "Percent",
+				SkipAutoExtract = true,
+			},
+			{
+				Key = "ReportedDodgeBonus",
+				ExtractAs = "TooltipDodgeBonus",
+				Format = "Percent",
+			},
+		},
+	},
+
+	HadesLaserThresholdBoonOld = 
+	{
+		Name = "HadesLaserThresholdBoonOld",
+		CustomTitle= "愤怒叱喝",
+		Description = "每当你受到 {$TooltipData.ExtractData.Threshold} 点伤害后，进入{$Keywords.Invulnerable}状态并向四周发射光束，持续 {#BoldFormatGraft}{$TooltipData.ExtractData.Duration} 秒{#Prev}。",
+		InheritFrom = { "InPersonOlympianTrait" },
+		Icon = "Boon_Hades_08",
+		RarityLevels =
+		{
+			Common =
+			{
+				Multiplier = 1.0,
+			},
+			Rare =
+			{
+				Multiplier = 1.5,
+			},
+			Epic =
+			{
+				Multiplier = 2.0,
+			},
+			Heroic =
+			{
+				Multiplier = 2.5,
+			},
+		},
+		BlockInRunRarify = true,
+		OnSelfDamagedFunction = 
+		{
+			NotDamagingRetaliate = true,
+			Name = "CheckRadialLaserRetaliate",
+			FunctionArgs = 
+			{
+				HealthThreshold = 100,
+				ProjectileName = "HadesCastBeam",
+				ProjectileCount = 4,
+				InvulnerabilityDuration = 5,
+				ReportValues = 
+				{ 
+					ReportedThreshold = "HealthThreshold",
+					ReportedCount = "ProjectileCount",
+					ReportedDuration = "InvulnerabilityDuration",
+				}
+			}
+		},
+		StatLines =
+		{
+			"LaserDamageStatDisplay",
+		},
+		ExtractValues =
+		{
+			{
+				ExtractAs = "Damage",
+				External = true,
+				BaseType = "ProjectileBase",
+				BaseName = "HadesCastBeam",
+				BaseProperty = "Damage",
+			},
+			{
+				ExtractAs = "Interval",
+				SkipAutoExtract = true,
+				External = true,
+				BaseType = "ProjectileBase",
+				BaseName = "HadesCastBeam",
+				BaseProperty = "ImmunityDuration",
+				DecimalPlaces = 2,
+			},
+			{
+				Key = "ReportedThreshold",
+				ExtractAs = "Threshold",
+				SkipAutoExtract = true,
+			},
+			{
+				Key = "ReportedCount",
+				ExtractAs = "Count",
+				SkipAutoExtract = true,
+			},
+			{
+				Key = "ReportedDuration",
+				ExtractAs = "Duration",
+				SkipAutoExtract = true,
+			},
+		},
+	},
+
+	HexCooldownBuffBoonOld = 
+	{
+		Name = "HexCooldownBuffBoonOld",
+		CustomTitle= "夜色阑珊",
+		Description = "当你的{$Keywords.Spell}已就绪时，你的移动和武器速度加快。",
+		InheritFrom = {"AirBoon"},
+		Icon = "Boon_Hermes_32",
+		HexCooldownSpeedBuff = { BaseValue = 0.85, SourceIsMultiplier = true },
+		GameStateRequirements =
+		{
+			{
+				PathTrue = { "CurrentRun", "Hero", "SlottedTraits", "Spell", },
+			},
+			{
+				Path = { "CurrentRun", "Hero", "TraitDictionary", },
+				HasNone = { "SpellPotionTrait" },
+			},
+		},
+		
+		RarityLevels =
+		{
+			Common =
+			{
+				Multiplier = 1.0,
+			},
+			Rare =
+			{
+				Multiplier = 1.34,
+			},
+			Epic =
+			{
+				Multiplier = 1.67,
+			},
+			Heroic =
+			{
+				Multiplier = 2.00,
+			},
+		},
+		
+	},
 })
 
+
+DiyTraitData = {
+	"CheatExtraRush",
+	"CheatTraitSpeed",
+	"DaggerSpecialFanTraitOld",
+	-- "AxeComboSwingTraitOld",
+	-- "AxeConsecutiveStrikeTraitOld",
+	"ApolloMissStrikeBoonOld",
+	-- "DaggerSpecialRangeTraitOld",
+	-- "DaggerRepeatStrikeTraitOld",
+	-- "RandomDuoBoon",
+	"CoverRegenerationBoonOld",
+	"EchoRepeatKeepsakeBoonOld",
+	"ElementalDodgeBoonOld",
+	-- "HadesLaserThresholdBoonOld",
+	"HexCooldownBuffBoonOld",
+	-- "SpeedRunBossKeepsake",
+	-- "RevengeManaTrait",
+	-- "ManaInsideCastTrait",
+	-- "StaffSlowExTrait",
+	-- "StaffReserveManaBoostTrait",
+	-- "TemporaryImprovedWeaponTrait",
+	-- "MinorManaDiscountTalent",
+	-- "ManaDiscountTalent",
+	-- "ChargeSpeedTalent",
+	-- "SpellChargeBonusTalent",
+	-- "TimeSlowDashTalent",
+	-- "LaserPatienceTalent",
+	-- "LaserSpeedTalent",
+	-- "PolymorphAoETalent",
+	-- "TorchSpinAttackAltTrait",
+	-- "TorchHomingAttackTrait",
+	-- "TorchConsecutiveStrikeTrait",
+	-- "TorchOrbitDistanceTrait",	
+}
 
 
 
@@ -932,7 +1448,7 @@ ScreenData.DebugCheatSpawn =
 		-- 		"PoseidonSplashSprintBoon",
 		-- 		"CastRampBoon",
 		-- 		"ManaBurstCountBoon",
-		-- 		"CoverRegenerationBoon",
+		-- 		"CoverRegenerationBoonOld",
 		-- 		"MassiveAoEIncrease",
 		-- 	},
 		-- },
@@ -1011,7 +1527,7 @@ ScreenData.DebugCheatSpawn =
 		-- 		"CharmCrowdBoon",
 
 		-- 		-- Elemental
-		-- 		"ElementalDodgeBoon",
+		-- 		"ElementalDodgeBoonOld",
 				
 		-- 		-- Duos
 		-- 		"SprintEchoBoon",
@@ -1106,7 +1622,7 @@ ScreenData.DebugCheatSpawn =
 		-- 	"HermesCastDiscountBoon",
 		-- 	"ElementalUnifiedBoon",
 		-- 	"SlowProjectileBoon",
-		-- 	"HexCooldownBuffBoon",
+		-- 	"HexCooldownBuffBoonOld",
 		-- 	"MoneyMultiplierBoon",
 		-- 	"TimedKillBuffBoon",
 		-- 	"SprintShieldBoon",
@@ -1144,7 +1660,7 @@ ScreenData.DebugCheatSpawn =
 		-- 	"BurnOmegaBoon",
 		-- 	"SteamBoon",
 		-- 	"DoubleBurnBoon",
-		-- 	"CoverRegenerationBoon",
+		-- 	"CoverRegenerationBoonOld",
 		-- 	"ShadeMercFireballBoon",
 		-- 	"DoubleMassiveAttackBoon",
 		-- 	},
