@@ -520,15 +520,16 @@ end
 
 function mod.GetLootColorFromTrait(traitName)
 	local color = Color.Red
-	if mod.Config.ColorblindMode == true then
-		return color
-	end
-	for upgradeName, boonData in pairs(mod.BoonData) do
-		if ArrayContains(boonData, traitName) then
-			color = mod.GetLootColor(upgradeName)
-		end
-	end
 	return color
+	--if mod.Config.ColorblindMode == true then
+	--	return color
+	--end
+	--for upgradeName, boonData in pairs(mod.BoonData) do
+	--	if ArrayContains(boonData, traitName) then
+	--		color = mod.GetLootColor(upgradeName)
+	--	end
+	--end
+	--return color
 end
 
 function mod.RemoveAllTraits()
