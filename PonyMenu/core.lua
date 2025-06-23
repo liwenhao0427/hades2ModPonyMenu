@@ -646,20 +646,22 @@ function mod.CreateNewCustomRun(room)
 
 	if GameState.WorldUpgrades.WorldUpgradeUnusedWeaponBonus ~= nil then
 		if prevRun ~= nil and prevRun.BonusUnusedWeaponName ~= nil and CurrentRun.Hero.Weapons[prevRun.BonusUnusedWeaponName] then
-			if GameState.WorldUpgrades.UnusedWeaponBonusAddGems then
-				AddTrait(CurrentRun.Hero, "UnusedWeaponBonusTraitAddGems")
+			if GameState.WorldUpgrades.WorldUpgradeUnusedWeaponBonusT2 then
+				AddTrait( CurrentRun.Hero, "UnusedWeaponBonusTrait2" )
 			else
-				AddTrait(CurrentRun.Hero, "UnusedWeaponBonusTrait")
+				AddTrait( CurrentRun.Hero, "UnusedWeaponBonusTrait" )
 			end
 		end
 	end
 
 	local bountyData = BountyData[args.ActiveBounty]
 	if bountyData ~= nil and bountyData.StartingTraits ~= nil then
-		for i, traitData in ipairs(bountyData.StartingTraits) do
-			AddTrait(CurrentRun.Hero, traitData.Name, traitData.Rarity)
+		LoadActiveBountyPackages()
+		for i, traitData in ipairs( bountyData.StartingTraits ) do
+			AddTrait( CurrentRun.Hero, traitData.Name, traitData.Rarity, { FromLoot = true })
 		end
 	end
+
 
 	-- EquipKeepsake(CurrentRun.Hero, GameState.LastAwardTrait, { FromLoot = true, SkipNewTraitHighlight = true })
 	-- EquipAssist(CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true })
@@ -686,6 +688,7 @@ function mod.CreateNewCustomRun(room)
 	end
 
 	InitHeroLastStands(CurrentRun.Hero)
+	UpdateHeroTraitDictionary()
 
 	InitializeRewardStores(CurrentRun)
 	--SelectBannedEliteAttributes( CurrentRun )
@@ -704,6 +707,7 @@ function mod.CreateNewCustomRun(room)
 	return CurrentRun
 end
 
+-- 直接进入指定房间 Boss战用
 function mod.StartNewCustomRun(room)
 	AddInputBlock({ Name = "StartOver" })
 
@@ -730,6 +734,7 @@ function mod.StartNewCustomRun(room)
 	SetConfigOption({ Name = "BlockGameplayTimer", Value = false })
 
 	AddTimerBlock(currentRun, "StartOver")
+	WaitForSpeechFinished()
 
 	RequestSave({ StartNextMap = currentRun.CurrentRoom.Name, SaveName = "_Temp", DevSaveName = CreateDevSaveName(currentRun) })
 	ValidateCheckpoint({ Value = true })

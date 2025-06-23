@@ -2417,6 +2417,8 @@ end
 
 function mod.GiveConsumableToPlayer(screen, button)
 	DropMinorConsumable( button.Consumable.key )
+	mod.CloseBoonSelector(screen)
+	debugShowText("部分道具如繁星之路，局外使用可能导致报错，请在局内使用！")
 	-- MapState.RoomRequiredObjects = {}
 -- 	if button.Consumable.UseFunctionName and button.Consumable.UseFunctionName == "OpenTalentScreen" then
 --         DropMinorConsumable( button.Consumable.key )
