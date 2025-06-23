@@ -786,6 +786,22 @@ function mod.ChangeBoonManagerMode(screen, button)
 	ModifyTextBox({ Id = button.Id, Text = ">>" .. button.Text .. (button.Icon or "") .. "<<" })
 end
 
+
+function mod.GetDowngradedRarity( baseRarity, rarityUpgradeOrder )
+	local rarityTable = rarityUpgradeOrder or TraitRarityData.RarityUpgradeOrder
+	baseRarity = baseRarity or "Common"
+
+	if not rarityUpgradeOrder and HasHeroTraitValue("ReplaceUpgradedRarityTable") then
+		rarityTable = GetHeroTraitValues("ReplaceUpgradedRarityTable")[1]
+	end
+
+	local key = GetKey( rarityTable, baseRarity )
+	if key and rarityTable[key - 1] then
+		return rarityTable[key - 1]
+	end
+end
+
+-- 点击祝福的效果
 function mod.HandleBoonManagerClick(screen, button)
 	if button.Boon == nil or screen.Mode == nil then
 		return
@@ -900,8 +916,8 @@ function mod.HandleBoonManagerClick(screen, button)
 			local upgradableTraits = {}
 			local upgradedTraits = {}
 			for i, traitData in pairs(CurrentRun.Hero.Traits) do
-				if TraitData[traitData.Name] and traitData.Rarity ~= nil and GetDowngradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels ~= nil
-					and traitData.RarityLevels[GetDowngradedRarity(traitData.Rarity)] ~= nil and mod.IsBoonManagerValid(traitData.Name) then
+				if TraitData[traitData.Name] and traitData.Rarity ~= nil and mod.GetDowngradedRarity(traitData.Rarity) ~= nil and traitData.RarityLevels ~= nil
+					and traitData.RarityLevels[mod.GetDowngradedRarity(traitData.Rarity)] ~= nil and mod.IsBoonManagerValid(traitData.Name) then
 					if Contains(upgradableTraits, traitData) or traitData.Rarity == "Legendary" then
 					else
 						table.insert(upgradableTraits, traitData)
@@ -912,7 +928,7 @@ function mod.HandleBoonManagerClick(screen, button)
 				while not IsEmpty(upgradableTraits) do
 					local traitData = RemoveRandomValue(upgradableTraits)
 					upgradedTraits[traitData.Name] = true
-					local rarity = GetDowngradedRarity(traitData.Rarity)
+					local rarity = mod.GetDowngradedRarity(traitData.Rarity)
 					RemoveTrait(CurrentRun.Hero, traitData.Name)
 					AddTraitToHero({
 						TraitData = GetProcessedTraitData({
@@ -944,6 +960,7 @@ function mod.HandleBoonManagerClick(screen, button)
 		end
 	else
 		--Individual mode
+		-- 升级
 		if screen.Mode == "Level" and screen.LockedModeButton.Add == true then
 			if GetTraitCount(CurrentRun.Hero, button.Boon.Name) < 100 and button.Boon.RemainingUses == nil and IsGodTrait(button.Boon.Name) and not button.Boon.BlockStacking and (not button.Boon.RequiredFalseTrait or button.Boon.RequiredFalseTrait ~= button.Boon.Name) then
 				local traitData = GetHeroTrait(button.Boon.Name)
@@ -993,9 +1010,9 @@ function mod.HandleBoonManagerClick(screen, button)
 			end
 			return
 		elseif screen.Mode == "Rarity" and screen.LockedModeButton.Substract == true then
-			if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels ~= nil and button.Boon.RarityLevels[GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
+			if TraitData[button.Boon.Name] and button.Boon.Rarity ~= nil and mod.GetDowngradedRarity(button.Boon.Rarity) ~= nil and button.Boon.RarityLevels ~= nil and button.Boon.RarityLevels[mod.GetDowngradedRarity(button.Boon.Rarity)] ~= nil then
 				local count = GetTraitCount(CurrentRun.Hero, button.Boon)
-				button.Boon.Rarity = GetDowngradedRarity(button.Boon.Rarity)
+				button.Boon.Rarity = mod.GetDowngradedRarity(button.Boon.Rarity)
 				SetColor({ Id = button.Background.Id, Color = Color["BoonPatch" .. button.Boon.Rarity] })
 				RemoveTrait(CurrentRun.Hero, button.Boon.Name)
 				AddTraitToHero({
@@ -1714,6 +1731,25 @@ function mod.updateExtraSelectorText()
 	end
 end
 
+function mod.updateExtraSelectorTextForInit(screen)
+	for i, button in pairs(screen.ComponentData.Background.Children) do
+		if mod.flags[i] then
+			if mod.flags[i] == "ON" then
+				button.TextArgs.Color = Color.Blue
+				button.Text = "已启用" .. button.Data.OriText
+			else
+				button.TextArgs.Color = Color.Red
+				button.Text = "取消" .. button.Data.OriText
+			end
+		else
+			if button.Data.OriText then
+				button.TextArgs.Color = Color.White
+				button.Text = button.Data.OriText
+			end
+		end
+	end
+end
+
 function mod.setFlagForButton(button)
 	if mod.flags[button.Key] then
 		mod.flags[button.Key] = nil
@@ -2365,6 +2401,8 @@ function mod.ExtraSelectorLoadPage()
 
 	local components = screen.Components
 
+	mod.updateExtraSelectorTextForInit(screen)
+
 	OnScreenOpened(screen)
 	CreateScreenFromData(screen, screen.ComponentData)
 	SetColor({ Id = components.BackgroundTint.Id, Color = Color.Black })
@@ -2375,7 +2413,6 @@ function mod.ExtraSelectorLoadPage()
 	SetConfigOption({ Name = "ExclusiveInteractGroup", Value = "Combat_Menu_TraitTray" })
 	screen.KeepOpen = true
 	HandleScreenInput(screen)
-	mod.updateExtraSelectorText()
 end
 
 function mod.GiveConsumableToPlayer(screen, button)
