@@ -565,7 +565,7 @@ function mod.setupScreenData()
 				Q_Boss01 = {
 					Name = "TyphonHead_Full",
 					Portrait = "Codex_Portrait_Typhon",
-				},
+				}
 			},
 			TitleText =
 			{
@@ -837,15 +837,15 @@ function mod.setupCommandData()
 			Function = "PonyMenu.OpenBoonManager"
 		},
         -- 区域守卫
-        --{
-        --    IconPath = "GUI\\Icons\\GhostEmote\\Disgruntled",
-        --    -- IconPath = "GUI\\TyphonBruteMinibossDamagePreviewRing",
-        --    IconScale = 0.6,
-        --    Name = mod.Locale.BossSelectorTitle,
-        --    Description = mod.Locale.BossSelectorDescription,
-        --    Type = "Command",
-        --    Function = "PonyMenu.OpenBossSelector"
-        --},
+        {
+            IconPath = "GUI\\Icons\\GhostEmote\\Disgruntled",
+            -- IconPath = "GUI\\TyphonBruteMinibossDamagePreviewRing",
+            IconScale = 0.6,
+            Name = mod.Locale.BossSelectorTitle,
+            Description = mod.Locale.BossSelectorDescription,
+            Type = "Command",
+            Function = "PonyMenu.OpenBossSelector"
+        },
 		{
 			IconPath = "GUI\\Screens\\BoonIcons\\Trait_SurfacePenalty",
 			IconScale = 0.4,

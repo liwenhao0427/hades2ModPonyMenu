@@ -621,35 +621,35 @@ function mod.IsBoonTrait(traitName)
 		end
 	end
 end
-
 function mod.CreateNewCustomRun(room)
 	local prevRun = CurrentRun
 	local args = args or {}
+
 	SetupRunData()
 	ResetUI()
 
-	CurrentRun = {}
+	--CurrentRun = {}
 	RunStateInit()
 
 	if args.RunOverrides ~= nil then
-		for key, value in pairs(args.RunOverrides) do
-			CurrentRun[key] = value
-		end
+		OverwriteTableKeys(CurrentRun, args.RunOverrides)
 	end
 
 	for name, value in pairs(GameState.ShrineUpgrades) do
 		ShrineUpgradeExtractValues(name)
 	end
 
+	CurrentRun.ActiveBounty = args.ActiveBounty
 	CurrentRun.ForceNextEncounterData = args.Encounter
+
 	CurrentRun.Hero = CreateNewHero(prevRun, args)
 
 	if GameState.WorldUpgrades.WorldUpgradeUnusedWeaponBonus ~= nil then
 		if prevRun ~= nil and prevRun.BonusUnusedWeaponName ~= nil and CurrentRun.Hero.Weapons[prevRun.BonusUnusedWeaponName] then
 			if GameState.WorldUpgrades.WorldUpgradeUnusedWeaponBonusT2 then
-				AddTrait( CurrentRun.Hero, "UnusedWeaponBonusTrait2" )
+				AddTrait(CurrentRun.Hero, "UnusedWeaponBonusTrait2")
 			else
-				AddTrait( CurrentRun.Hero, "UnusedWeaponBonusTrait" )
+				AddTrait(CurrentRun.Hero, "UnusedWeaponBonusTrait")
 			end
 		end
 	end
@@ -657,50 +657,30 @@ function mod.CreateNewCustomRun(room)
 	local bountyData = BountyData[args.ActiveBounty]
 	if bountyData ~= nil and bountyData.StartingTraits ~= nil then
 		LoadActiveBountyPackages()
-		for i, traitData in ipairs( bountyData.StartingTraits ) do
-			AddTrait( CurrentRun.Hero, traitData.Name, traitData.Rarity, { FromLoot = true })
+		for i, traitData in ipairs(bountyData.StartingTraits) do
+			AddTrait(CurrentRun.Hero, traitData.Name, traitData.Rarity, { FromLoot = true })
 		end
 	end
 
-
-	-- EquipKeepsake(CurrentRun.Hero, GameState.LastAwardTrait, { FromLoot = true, SkipNewTraitHighlight = true })
-	-- EquipAssist(CurrentRun.Hero, GameState.LastAssistTrait, { SkipNewTraitHighlight = true })
-	-- EquipFamiliar(nil, { Unit = CurrentRun.Hero, FamiliarName = GameState.EquippedFamiliar, SkipNewTraitHighlight = true })
-	-- EquipWeaponUpgrade(CurrentRun.Hero, { SkipNewTraitHighlight = true })
-	-- EquipMetaUpgrades(CurrentRun.Hero, { SkipNewTraitHighlight = true })
 	mod.LoadState(true)
 	UpdateRunHistoryCache(CurrentRun)
-	BuildMetaupgradeCache()
-
 
 	CurrentRun.BonusUnusedWeaponName = GetRandomUnequippedWeapon()
 	CurrentRun.ActiveBiomeTimer = GetNumShrineUpgrades("BiomeSpeedShrineUpgrade") > 0
 	CurrentRun.NumRerolls = GetTotalHeroTraitValue("RerollCount")
 	CurrentRun.NumTalentPoints = GetTotalHeroTraitValue("TalentPointCount")
-	CurrentRun.ActiveBounty = args.ActiveBounty
 	CurrentRun.ActiveBountyClears = GameState.PackagedBountyClears[CurrentRun.ActiveBounty] or 0
 	CurrentRun.ActiveBountyAttempts = GameState.PackagedBountyAttempts[CurrentRun.ActiveBounty] or 0
-	-- CurrentRun.SpellCharge = 5000
-	CurrentRun.ResourceNodesSeen = {}
+	CurrentRun.SpellCharge = 5000
 
 	if ConfigOptionCache.EasyMode then
 		CurrentRun.EasyModeLevel = GameState.EasyModeLevel
 	end
 
 	InitHeroLastStands(CurrentRun.Hero)
-	UpdateHeroTraitDictionary()
-
 	InitializeRewardStores(CurrentRun)
-	--SelectBannedEliteAttributes( CurrentRun )
 
 	CurrentRun.CurrentRoom = CreateRoom(room, args)
-
-
-	-- if args.RoomName ~= nil then
-	-- 	CurrentRun.CurrentRoom = CreateRoom(RoomData[args.RoomName], args)
-	-- else
-	-- 	CurrentRun.CurrentRoom = ChooseStartingRoom(CurrentRun, args)
-	-- end
 
 	AddResource("Money", CalculateStartingMoney(), "RunStart")
 
@@ -721,33 +701,41 @@ function mod.StartNewCustomRun(room)
 	end
 
 	local currentRun = CurrentRun
-	EndRun(currentRun)
+
+	CurrentRun.EndingRoomName = CurrentRun.CurrentRoom.Name
+	table.insert( GameState.RunHistory, CurrentRun )
+	GameState.CompletedRunsCache = TableLength( GameState.RunHistory )
+	CurrentRun.CurrentRoom = nil
+	PrevRun = CurrentRun
+	--CurrentRun = nil
+
 	CurrentHubRoom = nil
 	PreviousDeathAreaRoom = nil
+
+	HideCombatUI("StartOver")
+
 	currentRun = mod.CreateNewCustomRun(room)
-	StopSound({ Id = AudioState.AmbientMusicId, Duration = 1.0 })
-	AudioState.AmbientMusicId = nil
-	AudioState.AmbientTrackName = nil
+	StopMusicianMusic({ Duration = 1.0 })
 	ResetObjectives()
 
 	SetConfigOption({ Name = "FlipMapThings", Value = false })
 	SetConfigOption({ Name = "BlockGameplayTimer", Value = false })
 
 	AddTimerBlock(currentRun, "StartOver")
-	WaitForSpeechFinished()
 
-	RequestSave({ StartNextMap = currentRun.CurrentRoom.Name, SaveName = "_Temp", DevSaveName = CreateDevSaveName(currentRun) })
 	ValidateCheckpoint({ Value = true })
 
+	UnblockCombatUI("StartOver")
+	WaitForSpeechFinished()
 	RemoveInputBlock({ Name = "StartOver" })
 	RemoveTimerBlock(currentRun, "StartOver")
+
 	AddInputBlock({ Name = "MapLoad" })
 	AddTimerBlock(CurrentRun, "MapLoad")
 
 	LoadMap({ Name = currentRun.CurrentRoom.Name, ResetBinks = true })
-	-- mod.LoadState(true)
-	-- BuildMetaupgradeCache()
 end
+
 
 function mod.KillPlayer()
 	CurrentRun.Hero.IsDead = false
