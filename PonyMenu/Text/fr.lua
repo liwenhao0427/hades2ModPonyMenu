@@ -80,4 +80,10 @@ mod.AddLocale("fr", {
 	RepeatableChaosTrials = "Bénédictions du Chaos répétables",
 	FreeToBuy = "Gratuit à acheter",
 
+	GetRavenFamiliar = "Déverrouiller le familier corbeau",
+	GetFrogFamiliar = "Déverrouiller le familier grenouille",
+	GetCatFamiliar = "Déverrouiller le familier chat",
+	GetHoundFamiliar = "Déverrouiller le familier chien",
+	GetPolecatFamiliar = "Déverrouiller le familier putois",
+
 })

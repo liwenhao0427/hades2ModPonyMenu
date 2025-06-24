@@ -766,7 +766,11 @@ function mod.setupScreenData()
 						EphyraZoomOut = mod.genBtn("EphyraZoomOut", mod.setEphyraZoomOut),
 						RepeatableChaosTrials = mod.genBtn("RepeatableChaosTrials", mod.RepeatableChaosTrials),
 						FreeToBuy = mod.genBtn("FreeToBuy", mod.FreeToBuy),
-
+						GetRavenFamiliar = mod.genBtn("GetRavenFamiliar", mod.GetRavenFamiliar),
+						GetFrogFamiliar = mod.genBtn("GetFrogFamiliar", mod.GetFrogFamiliar),
+						GetCatFamiliar = mod.genBtn("GetCatFamiliar", mod.GetCatFamiliar),
+						GetHoundFamiliar = mod.genBtn("GetHoundFamiliar", mod.GetHoundFamiliar),
+						GetPolecatFamiliar = mod.genBtn("GetPolecatFamiliar", mod.GetPolecatFamiliar),
 						--setEphyraZoomOut
 						-- EphyraZoomOut = {
 						-- 	Name = "ButtonDefault",

@@ -1842,6 +1842,40 @@ function mod.setMoreMoney(screen, button)
 	AddResource( "Money", 100, "RunStart" )
 end
 
+function mod.GetFamiliar(familyName, screen)
+	GameState.FamiliarsUnlocked[familyName] = true
+	CurrentRun.FamiliarsUnlocked[familyName] = true
+	mod.CloseBoonSelector(screen)
+	debugShowText("已解锁宠物，下次进入房间生效！")
+	SetAnimation({ Name = "Melinoe_Kneel", DestinationId = CurrentRun.Hero.ObjectId })
+	wait( 6 * 0.85 )
+	SetAnimation({ Name = "MelinoeIdleWeaponless", DestinationId = CurrentRun.Hero.ObjectId })
+	thread( PlayVoiceLines, GlobalVoiceLines.FamiliarRecruitedVoiceLines )
+	thread( CheckQuestStatus )
+end
+
+
+-- 获取乌鸦魔宠
+function mod.GetRavenFamiliar(screen, button)
+	mod.GetFamiliar("RavenFamiliar", screen)
+end
+
+function mod.GetFrogFamiliar(screen, button)
+	mod.GetFamiliar("FrogFamiliar", screen)
+end
+
+function mod.GetCatFamiliar(screen, button)
+	mod.GetFamiliar("CatFamiliar", screen)
+end
+
+function mod.GetHoundFamiliar(screen, button)
+	mod.GetFamiliar("HoundFamiliar", screen)
+end
+
+function mod.GetPolecatFamiliar(screen, button)
+	mod.GetFamiliar("PolecatFamiliar", screen)
+end
+
 -- 给我恢复
 function mod.setRestoreHealth(screen, button)
 	PlaySound({ Name = "/SFX/Menu Sounds/GodBoonInteract" })

@@ -80,4 +80,9 @@ mod.AddLocale("en", {
 	RepeatableChaosTrials = "Chaos Blessings Repeatable",
 	FreeToBuy = "Free to Buy",
 
+	GetRavenFamiliar = "Unlock Raven Familiar",
+	GetFrogFamiliar = "Unlock Frog Familiar",
+	GetCatFamiliar = "Unlock Cat Familiar",
+	GetHoundFamiliar = "Unlock Hound Familiar",
+	GetPolecatFamiliar = "Unlock Polecat Familiar",
 })

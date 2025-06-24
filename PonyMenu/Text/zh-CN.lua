@@ -79,5 +79,10 @@ mod.AddLocale("zh-CN", {
     RepeatableChaosTrials = "混沌祝福可重复",
 
     FreeToBuy = "0元购",
+    GetRavenFamiliar = "解锁鸦鸦魔宠",
+    GetFrogFamiliar = "解锁蛙蛙魔宠",
+    GetCatFamiliar = "解锁猫猫魔宠",
+    GetHoundFamiliar = "解锁狗狗魔宠",
+    GetPolecatFamiliar = "解锁鼬鼬魔宠",
 
 })

@@ -80,4 +80,10 @@ mod.AddLocale("zh-TW", {
 
     FreeToBuy = "0元购",
 
+	GetRavenFamiliar = "解鎖鴉鴉魔寵",
+	GetFrogFamiliar = "解鎖蛙蛙魔寵",
+	GetCatFamiliar = "解鎖貓貓魔寵",
+	GetHoundFamiliar = "解鎖狗狗魔寵",
+	GetPolecatFamiliar = "解鎖鼬鼬魔寵",
+
 })

@@ -81,4 +81,9 @@ mod.AddLocale("pt-BR", {
 
 	FreeToBuy = "Grátis para Comprar",
 
+	GetRavenFamiliar = "Desbloquear Familiar Corvo",
+	GetFrogFamiliar = "Desbloquear Familiar Sapo",
+	GetCatFamiliar = "Desbloquear Familiar Gato",
+	GetHoundFamiliar = "Desbloquear Familiar Cão",
+	GetPolecatFamiliar = "Desbloquear Familiar Doninha",
 })
