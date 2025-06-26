@@ -115,6 +115,20 @@ end
 function mod.GiveBoonToPlayer(screen, button)
 	local boon = button.Boon
 	if not HeroHasTrait(boon) then
+		if TraitData[boon].Slot == "Spell" then
+			if mod.DoesPlayerHaveHex() then
+				local bool = true
+				while bool do
+					bool = mod.HandleSpellRemoval()
+				end
+			end
+			local spell = boon:gsub("Trait", "")
+			spell = spell:gsub("Spell", "")
+			CurrentRun.Hero.SlottedSpell = DeepCopyTable(SpellData[spell])
+			CurrentRun.Hero.SlottedSpell.HasDuoTalent = SessionMapState.DuoTalentEligibleSpell[spell]
+			CurrentRun.Hero.SlottedSpell.Talents = DeepCopyTable(CreateTalentTree(SpellData[spell]))
+			UpdateTalentPointInvestedCache()
+		end
 		AddTraitToHero({
 			TraitData = GetProcessedTraitData({
 				Unit = CurrentRun.Hero,
@@ -136,6 +150,35 @@ function mod.GiveBoonToPlayer(screen, button)
 		Destroy({ Ids = ids })
 	end
 end
+
+function mod.HandleSpellRemoval()
+	local deletedSomething = false
+	for i, traitData in pairs(CurrentRun.Hero.Traits) do
+		if traitData.IsTalent then
+			deletedSomething = true
+			RemoveTrait(CurrentRun.Hero, traitData.Name)
+		elseif traitData.Slot == "Spell" then
+			deletedSomething = true
+			for _, weapon in pairs(traitData.PreEquipWeapons) do
+				UnequipWeapon({ DestinationId = CurrentRun.Hero.ObjectId, Name = weapon, UnloadPackages = false })
+			end
+			RemoveTrait(CurrentRun.Hero, traitData.Name)
+			CurrentRun.Hero.SlottedSpell = nil
+			UpdateTalentPointInvestedCache()
+		end
+	end
+	return deletedSomething
+end
+
+function mod.DoesPlayerHaveHex()
+	for i, traitData in pairs (CurrentRun.Hero.Traits) do
+		if traitData.Slot and traitData.Slot == "Spell" and CurrentRun.Hero.SlottedSpell ~= nil then
+			return true
+		end
+	end
+	return false
+end
+
 
 function mod.BoonSelectorLoadPage(screen)
 	mod.BoonManagerPageButtons(screen, screen.Name)
@@ -2451,8 +2494,6 @@ end
 
 function mod.GiveConsumableToPlayer(screen, button)
 	DropMinorConsumable( button.Consumable.key )
-	mod.CloseBoonSelector(screen)
-	debugShowText("部分道具如繁星之路，局外使用可能导致报错，请在局内使用！")
 	-- MapState.RoomRequiredObjects = {}
 -- 	if button.Consumable.UseFunctionName and button.Consumable.UseFunctionName == "OpenTalentScreen" then
 --         DropMinorConsumable( button.Consumable.key )
